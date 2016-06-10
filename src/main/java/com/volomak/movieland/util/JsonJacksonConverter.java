@@ -3,6 +3,7 @@ package com.volomak.movieland.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volomak.movieland.entity.Genre;
+import com.volomak.movieland.entity.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,15 @@ public class JsonJacksonConverter {
         long time = System.currentTimeMillis() - startTime;
         log.info("Genre {} is received. It took {} ms", genre, time);
         return genre;
+    }
+
+    public Movie parseMovie(String json){
+        log.info("Start movie json parse");
+        long startTime = System.currentTimeMillis();
+        Movie movie = parseValue(json, Movie.class);
+        long time = System.currentTimeMillis() - startTime;
+        log.info("Movie {} is received. It took {} ms", movie, time);
+        return movie;
     }
 
     private <T> T parseValue(String json, Class<T> clazz) {

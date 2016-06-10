@@ -29,20 +29,21 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public Genre getById(int id) {
-        log.info("Start getById genre");
+        log.info("Start query to get genre with id {} from DB", id);
         long startTime = System.currentTimeMillis();
         Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id}, new GenreRowMapper());
-        log.info("Finish getById");
+        log.info("Finish query to get genre with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genre;
     }
 
     @Override
     public void add(Genre genre) {
-        log.info("Start add genre");
+        log.info("Start query to add genre {} to DB", genre);
+        long startTime = System.currentTimeMillis();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("id", genre.getId());
         parameterSource.addValue("name_c", genre.getName());
         namedJdbcTemplate.update(addGenreSQL, parameterSource);
-        log.info("Finish add genre");
+        log.info("Finish query to add genre {} to DB. It took {} ms", genre, System.currentTimeMillis() - startTime);
     }
 }

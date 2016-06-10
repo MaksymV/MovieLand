@@ -11,4 +11,13 @@
     <bean id="addGenreSQL" class="java.lang.String">
         <constructor-arg value="INSERT INTO genre (name) VALUES (:name);"/>
     </bean>
+
+    <bean id="getMovieByIdSQL" class="java.lang.String">
+        <constructor-arg value="SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie where id = ?;"/>
+    </bean>
+
+    <bean id="addMovieSQL" class="java.lang.String">
+        <constructor-arg value="INSERT INTO movie (name, original_name, year_i, description_c, rate_r, price_r) VALUES (:name, :original_name, :year_i, :description_c, :rate_r, :price_r);"/>
+    </bean>
+
 </beans>
