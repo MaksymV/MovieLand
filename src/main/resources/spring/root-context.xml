@@ -10,7 +10,7 @@
     <import resource="query-context.xml"/>
 
     <context:component-scan base-package="com.volomak.movieland">
-        <context:exclude-filter type="regex" expression="com\.volomak\.moviewland\.controller\..*"/>
+        <context:exclude-filter type="regex" expression="com\.volomak\.movieland\.controller\..*"/>
     </context:component-scan>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -21,12 +21,17 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/postgres"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="q1w2e3r4t5y6"/>
+    </bean>
+    <!--
     <jdbc:embedded-database id="dataSource" type="HSQL">
-        <!--
         <jdbc:script location="classpath:/db/create-db.sql"/>
         <jdbc:script location="classpath:db/insert-cities.sql"/>
-        -->
     </jdbc:embedded-database>
-
+    -->
 
 </beans>

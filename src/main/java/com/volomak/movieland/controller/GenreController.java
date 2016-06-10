@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @Controller
-@RequestMapping("/v1/city")
+@RequestMapping("/v1/genre")
 public class GenreController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -30,7 +30,7 @@ public class GenreController {
     @Autowired
     private JsonJacksonConverter jsonJacksonConverter;
 
-    @RequestMapping("/{genreId}")
+    @RequestMapping(value = "/{genreId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getGenreById(@PathVariable int genreId){
         log.info("Sending request to get city with id = {}", genreId);

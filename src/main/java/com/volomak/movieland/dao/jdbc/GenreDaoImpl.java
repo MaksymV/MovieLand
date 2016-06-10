@@ -6,11 +6,12 @@ import com.volomak.movieland.entity.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GenreDaoImpl implements GenreDao {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -40,7 +41,7 @@ public class GenreDaoImpl implements GenreDao {
         log.info("Start add genre");
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("id", genre.getId());
-        parameterSource.addValue("name", genre.getName());
+        parameterSource.addValue("name_c", genre.getName());
         namedJdbcTemplate.update(addGenreSQL, parameterSource);
         log.info("Finish add genre");
     }

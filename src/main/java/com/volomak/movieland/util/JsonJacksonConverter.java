@@ -9,10 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-
-/**
- * Created by mvoloshchenko on 09/06/2016.
- */
 @Service
 public class JsonJacksonConverter {
     private final Logger log = LoggerFactory.getLogger(getClass());
