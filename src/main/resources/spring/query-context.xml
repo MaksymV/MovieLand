@@ -5,10 +5,10 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="getGenreByIdSQL" class="java.lang.String">
-        <constructor-arg value="SELECT id, name_c FROM genre where id = ?;"/>
+        <constructor-arg value="SELECT id, name FROM genre where id = ?;"/>
     </bean>
 
     <bean id="addGenreSQL" class="java.lang.String">
-        <constructor-arg value="INSERT INTO genre (name_c) VALUES (:name_c);"/>
+        <constructor-arg value="INSERT INTO genre (name) VALUES (:name);"/>
     </bean>
 </beans>

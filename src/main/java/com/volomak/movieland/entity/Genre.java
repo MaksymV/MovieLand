@@ -22,10 +22,10 @@ public class Genre {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Genre{" +
                 "id=" + id +
-                "name=" + name;
+                ", name='" + name + '\'' +
+                '}';
     }
-
 }
