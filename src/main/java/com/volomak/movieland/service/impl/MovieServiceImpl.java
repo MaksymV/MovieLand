@@ -2,11 +2,11 @@ package com.volomak.movieland.service.impl;
 
 import com.volomak.movieland.dao.MovieDao;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.service.CountryService;
 import com.volomak.movieland.service.GenreService;
 import com.volomak.movieland.service.MovieService;
-import com.volomak.movieland.service.dto.GenreListDto;
-import com.volomak.movieland.service.dto.MovieListDto;
-import com.volomak.movieland.service.dto.MovieListDtoConverter;
+import com.volomak.movieland.service.ReviewService;
+import com.volomak.movieland.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +27,30 @@ public class MovieServiceImpl implements MovieService {
     private GenreService genreService;
 
     @Autowired
+    private CountryService countryService;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
     private MovieListDtoConverter movieListDtoConverter;
 
     @Override
-    public Movie getById(int id) {
-        return movieDao.getById(id);
+    public MovieDetailsDto getById(int id) {
+
+        List<MovieListDto> movieListDtos = new ArrayList<>();
+        for (Movie movie : movieDao.getMovies()) {
+            log.info("Start query to get genres with movie id {} from DB", movie.getId());
+            long startTime = System.currentTimeMillis();
+            List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
+            List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
+            List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
+            log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
+            movieListDtos.add(movieListDtoConverter.convert(movie, genres));
+
+
+
+
     }
 
     @Override
@@ -41,6 +60,8 @@ public class MovieServiceImpl implements MovieService {
              log.info("Start query to get genres with movie id {} from DB", movie.getId());
              long startTime = System.currentTimeMillis();
              List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
+             List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
+             List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
              log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
              movieListDtos.add(movieListDtoConverter.convert(movie, genres));
         }
