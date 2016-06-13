@@ -3,41 +3,37 @@ package com.volomak.movieland.controller;
 import com.google.gson.Gson;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.service.MovieService;
-import com.volomak.movieland.service.dto.MovieDto;
-import com.volomak.movieland.util.JsonJacksonConverter;
-import com.volomak.movieland.util.JsonManualConverter;
+import com.volomak.movieland.service.dto.MovieListDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/v1/movie")
 public class MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MovieService movieService;
-
+/*
     @Autowired
     private JsonManualConverter jsonManualConverter;
 
     @Autowired
     private JsonJacksonConverter jsonJacksonConverter;
-
-    @RequestMapping(value = "/{movieId}", produces = "application/json;charset=UTF-8")
+*/
+    @RequestMapping(value = "/movie/{movieId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getMovieById(@PathVariable int movieId){
         log.info("Sending request to get movie with id = {}", movieId);
         long startTime = System.currentTimeMillis();
         Movie movie = movieService.getById(movieId);
-        String movieJson = jsonManualConverter.toJson(movie);
+        String movieJson = new Gson().toJson(movie);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
     }
@@ -47,13 +43,12 @@ public class MovieController {
     public String getMovies(){
         log.info("Sending request to get movies");
         long startTime = System.currentTimeMillis();
-        List<MovieDto> movies = movieService.getMovies();
+        List<MovieListDto> movies = movieService.getMovies();
         String movieJson = new Gson().toJson(movies);
-        //String movieJson = jsonManualConverter.toJson(movies);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
     }
-
+/*
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> addMovie(@RequestBody String json){
@@ -69,4 +64,5 @@ public class MovieController {
         log.info("Movie {} is added. It took {} ms", json, System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+*/
 }

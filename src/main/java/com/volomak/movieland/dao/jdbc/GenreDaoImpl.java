@@ -1,7 +1,6 @@
 package com.volomak.movieland.dao.jdbc;
 
 import com.volomak.movieland.dao.GenreDao;
-import com.volomak.movieland.dao.jdbc.mapper.GenreRowMapper;
 import com.volomak.movieland.entity.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +34,22 @@ public class GenreDaoImpl implements GenreDao {
     private String addGenreSQL;
 
     @Autowired
-    private String getGenresByMovie;
+    private String getGenresByMovieIdSQL;
 
     @Override
     public Genre getById(int id) {
         log.info("Start query to get genre with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id}, new GenreRowMapper());
+        Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id},
+                new RowMapper<Genre>(){
+                    @Override
+                    public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Genre genre = new Genre();
+                        genre.setId(resultSet.getInt("id"));
+                        genre.setName(resultSet.getString("name_c"));
+                        return genre;
+                    }
+                });
         log.info("Finish query to get genre with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genre;
     }
@@ -50,14 +58,14 @@ public class GenreDaoImpl implements GenreDao {
     public List<Genre> getByMovieId(int id) {
         log.info("Start query to get genres from DB");
         long startTime = System.currentTimeMillis();
-        List<Genre> genres = jdbcTemplate.query(getGenresByMovie,
+        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL,
                 new PreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement preparedStatement) throws SQLException {
                         preparedStatement.setInt(1, id);
                     }
                 },
-        new RowMapper<Genre>() {
+                new RowMapper<Genre>() {
                     @Override
                     public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
                         Genre genre = new Genre();

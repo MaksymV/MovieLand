@@ -1,10 +1,8 @@
 package com.volomak.movieland.service.dto;
 
-import com.volomak.movieland.entity.Genre;
-
 import java.util.List;
 
-public class MovieDto {
+public class MovieListDto {
     private Long id;
     private String name;
     private String originalName;
@@ -13,7 +11,7 @@ public class MovieDto {
     private String description;
     private Double rate;
 
-    private List<Genre> genres;
+    private List<GenreListDto> genres;
 
     public Long getId() {
         return id;
@@ -63,11 +61,11 @@ public class MovieDto {
         this.rate = rate;
     }
 
-    public List<Genre> getGenres() {
+    public List<GenreListDto> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<GenreListDto> genres) {
         this.genres = genres;
     }
 }

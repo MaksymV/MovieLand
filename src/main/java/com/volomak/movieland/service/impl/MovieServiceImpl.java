@@ -1,12 +1,12 @@
 package com.volomak.movieland.service.impl;
 
-import com.volomak.movieland.dao.GenreDao;
 import com.volomak.movieland.dao.MovieDao;
-import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.service.GenreService;
 import com.volomak.movieland.service.MovieService;
-import com.volomak.movieland.service.dto.MovieDto;
-import com.volomak.movieland.service.dto.MovieDtoConverter;
+import com.volomak.movieland.service.dto.GenreListDto;
+import com.volomak.movieland.service.dto.MovieListDto;
+import com.volomak.movieland.service.dto.MovieListDtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Autowired
-    private GenreDao genreDao;
+    private GenreService genreService;
 
     @Autowired
-    private MovieDtoConverter movieDtoConverter;
+    private MovieListDtoConverter movieListDtoConverter;
 
     @Override
     public Movie getById(int id) {
@@ -35,16 +35,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieDto> getMovies() {
-        List<MovieDto> movieDtos = new ArrayList<>();
+    public List<MovieListDto> getMovies() {
+        List<MovieListDto> movieListDtos = new ArrayList<>();
         for (Movie movie : movieDao.getMovies()) {
              log.info("Start query to get genres with movie id {} from DB", movie.getId());
              long startTime = System.currentTimeMillis();
-             List<Genre> genres = genreDao.getByMovieId(movie.getId());
+             List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
              log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
-             movieDtos.add(movieDtoConverter.conver(movie, genres));
+             movieListDtos.add(movieListDtoConverter.convert(movie, genres));
         }
-        return movieDtos;
+        return movieListDtos;
     }
 
     @Override

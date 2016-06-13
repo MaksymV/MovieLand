@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MovieDaoImpl implements MovieDao {
@@ -31,7 +30,7 @@ public class MovieDaoImpl implements MovieDao {
     private String getMovieByIdSQL;
 
     @Autowired
-    private String getMovies;
+    private String getMoviesSQL;
 
     @Autowired
     private String addMovieSQL;
@@ -49,11 +48,12 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> getMovies() {
         log.info("Start query to get movies from DB");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(getMovies,
+        List<Movie> movies = jdbcTemplate.query(getMoviesSQL,
                 new RowMapper<Movie>() {
                     @Override
                     public Movie mapRow(ResultSet resultSet, int i) throws SQLException {
                         Movie movie = new Movie();
+                        movie.setId(resultSet.getInt("id"));
                         movie.setName(resultSet.getString("name"));
                         movie.setOriginalName(resultSet.getString("original_name"));
                         movie.setYear(resultSet.getLong("year_i"));
