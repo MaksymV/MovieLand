@@ -11,6 +11,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class MovieDaoImpl implements MovieDao {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -34,6 +37,15 @@ public class MovieDaoImpl implements MovieDao {
         Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[] {id}, new MovieRowMapper());
         log.info("Finish query to get movie with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return movie;
+    }
+
+    @Override
+    public List<Movie> getMovies() {
+        log.info("Start query to get movies from DB");
+        long startTime = System.currentTimeMillis();
+        List<Map<String, Object>> movies = jdbcTemplate.queryForList(getMovieByIdSQL);
+        log.info("Finish query to get movies from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        return null;
     }
 
     @Override

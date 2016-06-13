@@ -6,6 +6,8 @@ import com.volomak.movieland.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class MovieServiceImpl implements MovieService {
 
@@ -15,6 +17,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getById(int id) {
         return movieDao.getById(id);
+    }
+
+    @Override
+    public ArrayList<Movie> getMovies() {
+        return null;
     }
 
     @Override
