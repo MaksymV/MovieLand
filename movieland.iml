@@ -45,6 +45,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.5.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.5.3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.4-1200-jdbc41" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.dblock.waffle:waffle-jna:1.7" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.dev.jna:jna:4.1.0" level="project" />

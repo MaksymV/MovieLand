@@ -16,6 +16,20 @@
         <constructor-arg value="SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie where id = ?;"/>
     </bean>
 
+    <!--
+    <bean id="getMovies" class="java.lang.String">
+        <constructor-arg value="SELECT name, original_name, year_i, rate_r, STRING_AGG(genre.name_c, ';' ORDER BY genre.name_c) As genres FROM movie left join movie_genre on (movie_genre.movie_id = movie.id) left join genre on (genre.id = movie_genre.genre_id) group by name, original_name, year_i, rate_r;"/>
+    </bean>
+    -->
+
+    <bean id="getMovies" class="java.lang.String">
+        <constructor-arg value="SELECT name, original_name, year_i, description_c, rate_r, price_r FROM movie;"/>
+    </bean>
+
+    <bean id="getGenresByMovie" class="java.lang.String">
+        <constructor-arg value="SELECT genre.name_c FROM movie_genre join genre on (genre.id = movie_genre.genre_id) where movie_genre.movie_id = ?;"/>
+    </bean>
+
     <bean id="addMovieSQL" class="java.lang.String">
         <constructor-arg value="INSERT INTO movie (name, original_name, year_i, description_c, rate_r, price_r) VALUES (:name, :original_name, :year_i, :description_c, :rate_r, :price_r);"/>
     </bean>

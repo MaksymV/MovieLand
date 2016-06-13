@@ -1,7 +1,9 @@
 package com.volomak.movieland.controller;
 
+import com.google.gson.Gson;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.service.MovieService;
+import com.volomak.movieland.service.dto.MovieDto;
 import com.volomak.movieland.util.JsonJacksonConverter;
 import com.volomak.movieland.util.JsonManualConverter;
 import org.slf4j.Logger;
@@ -11,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/v1/movie")
@@ -33,6 +38,18 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         Movie movie = movieService.getById(movieId);
         String movieJson = jsonManualConverter.toJson(movie);
+        log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
+        return movieJson;
+    }
+
+    @RequestMapping(value = "/movies", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getMovies(){
+        log.info("Sending request to get movies");
+        long startTime = System.currentTimeMillis();
+        List<MovieDto> movies = movieService.getMovies();
+        String movieJson = new Gson().toJson(movies);
+        //String movieJson = jsonManualConverter.toJson(movies);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
     }
