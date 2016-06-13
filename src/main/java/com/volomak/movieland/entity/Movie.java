@@ -1,7 +1,7 @@
 package com.volomak.movieland.entity;
 
 public class Movie {
-  private Long id;
+  private int id;
   private String name;
   private String originalName;
   private Long year;
@@ -10,11 +10,11 @@ public class Movie {
   private Double rate;
   private Double price;
 
-  public Long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

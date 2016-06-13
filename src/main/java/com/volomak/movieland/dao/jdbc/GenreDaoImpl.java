@@ -66,7 +66,7 @@ public class GenreDaoImpl implements GenreDao {
                     }
                 });
         log.info("Finish query to get genres from DB. It took {} ms", System.currentTimeMillis() - startTime);
-        return null;
+        return genres;
     }
 
     @Override
