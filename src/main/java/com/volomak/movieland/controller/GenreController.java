@@ -21,13 +21,6 @@ public class GenreController {
 
     @Autowired
     private GenreService genreService;
-/*
-    @Autowired
-    private JsonManualConverter jsonManualConverter;
-
-    @Autowired
-    private JsonJacksonConverter jsonJacksonConverter;
-*/
 
     @RequestMapping(value = "genre/{genreId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -39,22 +32,4 @@ public class GenreController {
         log.info("City {} is received. It took {} ms", genreJson, System.currentTimeMillis() - startTime);
         return genreJson;
     }
-/*
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> addGenre(@RequestBody String json){
-        log.info("Sending request to add new city {}", json);
-        long startTime = System.currentTimeMillis();
-        try {
-        Genre genre = jsonJacksonConverter.parseGenre(json);
-        genreService.add(genre);
-        } catch (Exception e) {
-            log.error("Exception occurred during adding the city", e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        log.info("City {} is added. It took {} ms", json, System.currentTimeMillis() - startTime);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-*/
-
 }

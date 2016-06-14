@@ -56,7 +56,7 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public List<Genre> getByMovieId(int id) {
-        log.info("Start query to get genres from DB");
+        log.info("Start query to get genres with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
         List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL,
                 new PreparedStatementSetter() {
@@ -73,7 +73,7 @@ public class GenreDaoImpl implements GenreDao {
                         return genre;
                     }
                 });
-        log.info("Finish query to get genres from DB. It took {} ms", System.currentTimeMillis() - startTime);
+        log.info("Finish query to get genres with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genres;
     }
 

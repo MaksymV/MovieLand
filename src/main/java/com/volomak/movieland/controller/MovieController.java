@@ -20,13 +20,7 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
-/*
-    @Autowired
-    private JsonManualConverter jsonManualConverter;
 
-    @Autowired
-    private JsonJacksonConverter jsonJacksonConverter;
-*/
     @RequestMapping(value = "/movie/{movieId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getMovieById(@PathVariable int movieId){
@@ -45,24 +39,7 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movies = movieService.getMovies();
         String movieJson = new Gson().toJson(movies);
-        log.info("Movie {} are received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
+        log.info("Movies are received. It took {} ms", System.currentTimeMillis() - startTime);
         return movieJson;
     }
-/*
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<?> addMovie(@RequestBody String json){
-        log.info("Sending request to add new movie {}", json);
-        long startTime = System.currentTimeMillis();
-        try {
-            Movie movie = jsonJacksonConverter.parseMovie(json);
-            movieService.add(movie);
-        } catch (Exception e) {
-            log.error("Exception occurred during adding the movie", e);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        log.info("Movie {} is added. It took {} ms", json, System.currentTimeMillis() - startTime);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-*/
 }

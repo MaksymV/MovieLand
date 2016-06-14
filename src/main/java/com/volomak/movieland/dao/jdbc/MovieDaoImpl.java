@@ -1,7 +1,6 @@
 package com.volomak.movieland.dao.jdbc;
 
 import com.volomak.movieland.dao.MovieDao;
-import com.volomak.movieland.dao.jdbc.mapper.MovieRowMapper;
 import com.volomak.movieland.entity.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,22 @@ public class MovieDaoImpl implements MovieDao {
     public Movie getById(int id) {
         log.info("Start query to get movie with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[] {id}, new MovieRowMapper());
+        Movie movie = jdbcTemplate.queryForObject(getMovieByIdSQL, new Object[] {id},
+                new RowMapper<Movie>(){
+
+                    @Override
+                    public Movie mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Movie movie = new Movie();
+                        movie.setId(resultSet.getInt("id"));
+                        movie.setName(resultSet.getString("name"));
+                        movie.setOriginalName(resultSet.getString("original_name"));
+                        movie.setYear(resultSet.getLong("year_i"));
+                        movie.setDescription(resultSet.getString("description_c"));
+                        movie.setRate(resultSet.getDouble("rate_r"));
+                        movie.setPrice(resultSet.getDouble("price_r"));
+                        return movie;
+                    }
+                });
         log.info("Finish query to get movie with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return movie;
     }
