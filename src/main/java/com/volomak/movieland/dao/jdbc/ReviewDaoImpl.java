@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,21 +24,15 @@ public class ReviewDaoImpl implements ReviewDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Review getById(int id) {
+    public Review getById(Long id) {
         return null;
     }
 
     @Override
-    public List<Review> getByMovieId(int id) {
+    public List<Review> getByMovieId(Long id) {
         log.info("Start query to get reviews with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Review> reviews = jdbcTemplate.query(getReviewsByMovieIdSQL,
-                new PreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                        preparedStatement.setInt(1, id);
-                    }
-                },
+        List<Review> reviews = jdbcTemplate.query(getReviewsByMovieIdSQL, new Object[]{id},
                 new RowMapper<Review>() {
                     @Override
                     public Review mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -53,10 +45,5 @@ public class ReviewDaoImpl implements ReviewDao {
         );
         log.info("Finish query to get reviews with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return reviews;
-    }
-
-    @Override
-    public void add(Review review) {
-
     }
 }

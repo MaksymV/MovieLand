@@ -39,7 +39,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieDetailsDtoConverter movieDetailsDtoConverter;
 
     @Override
-    public MovieDetailsDto getById(int id) {
+    public MovieDetailsDto getById(Long id) {
         log.info("Start query to get movie with movie id {} from DB", id);
         Movie movie = movieDao.getById(id);
         long startTime = System.currentTimeMillis();
@@ -61,10 +61,5 @@ public class MovieServiceImpl implements MovieService {
              movieListDtos.add(movieListDtoConverter.convert(movie, genres));
         }
         return movieListDtos;
-    }
-
-    @Override
-    public void add(Movie movie) {
-        movieDao.add(movie);
     }
 }

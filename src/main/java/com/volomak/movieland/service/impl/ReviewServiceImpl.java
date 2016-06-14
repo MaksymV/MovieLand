@@ -20,21 +20,16 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewListDtoConverter reviewListDtoConverter;
 
     @Override
-    public Review getById(int id) {
+    public Review getById(Long id) {
         return reviewDao.getById(id);
     }
 
     @Override
-    public List<ReviewListDto> getByMovieId(int id) {
+    public List<ReviewListDto> getByMovieId(Long id) {
         List<ReviewListDto> reviewListDtos = new ArrayList<>();
         for (Review review : reviewDao.getByMovieId(id)){
             reviewListDtos.add(reviewListDtoConverter.converter(review));
         }
         return reviewListDtos;
-    }
-
-    @Override
-    public void add(Review review) {
-        reviewDao.add(review);
     }
 }

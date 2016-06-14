@@ -5,9 +5,7 @@ import com.volomak.movieland.entity.Country;
 import java.util.List;
 
 public interface CountryDao {
-    Country getById(int id);
+    Country getById(Long id);
 
-    List<Country> getByMovieId(int id);
-
-    void add(Country country);
+    List<Country> getByMovieId(Long id);
 }

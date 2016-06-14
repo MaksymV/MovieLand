@@ -6,7 +6,7 @@ public class MovieDetailsDto {
     private Long id;
     private String name;
     private String originalName;
-    private Long year;
+    private int year;
     private String description;
     private Double rate;
 
@@ -54,11 +54,11 @@ public class MovieDetailsDto {
         this.originalName = originalName;
     }
 
-    public Long getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Long year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

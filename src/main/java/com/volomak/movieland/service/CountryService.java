@@ -6,9 +6,7 @@ import com.volomak.movieland.service.dto.CountryListDto;
 import java.util.List;
 
 public interface CountryService {
-    Country getById(int id);
+    Country getById(Long id);
 
-    List<CountryListDto> getByMovieId(int id);
-
-    void add(Country country);
+    List<CountryListDto> getByMovieId(Long id);
 }

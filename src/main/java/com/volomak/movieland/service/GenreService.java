@@ -6,9 +6,7 @@ import com.volomak.movieland.service.dto.GenreListDto;
 import java.util.List;
 
 public interface GenreService {
-    Genre getById(int id);
+    Genre getById(Long id);
 
-    List<GenreListDto> getByMovieId(int id);
-
-    void add(Genre genre);
+    List<GenreListDto> getByMovieId(Long id);
 }

@@ -23,7 +23,7 @@ public class MovieController {
 
     @RequestMapping(value = "/movie/{movieId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getMovieById(@PathVariable int movieId){
+    public String getMovieById(@PathVariable Long movieId){
         log.info("Sending request to get movie with id = {}", movieId);
         long startTime = System.currentTimeMillis();
         MovieDetailsDto movie = movieService.getById(movieId);

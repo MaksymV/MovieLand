@@ -5,9 +5,7 @@ import com.volomak.movieland.entity.Genre;
 import java.util.List;
 
 public interface GenreDao {
-    Genre getById(int id);
+    Genre getById(Long id);
 
-    List<Genre> getByMovieId(int id);
-
-    void add(Genre genre);
+    List<Genre> getByMovieId(Long id);
 }

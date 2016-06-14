@@ -1,20 +1,26 @@
 package com.volomak.movieland.entity;
 
+import java.util.List;
+
 public class Movie {
-  private int id;
+  private Long id;
   private String name;
   private String originalName;
-  private Long year;
+  private int year;
 
   private String description;
   private Double rate;
   private Double price;
 
-  public int getId() {
+  List<Genre> genres;
+  List<Country> countries;
+  List<Review> reviews;
+
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -34,11 +40,11 @@ public class Movie {
     this.originalName = originalName;
   }
 
-  public Long getYear() {
+  public int getYear() {
     return year;
   }
 
-  public void setYear(Long year) {
+  public void setYear(int year) {
     this.year = year;
   }
 
@@ -66,9 +72,33 @@ public class Movie {
     this.price = price;
   }
 
+  public List<Genre> getGenres() {
+    return genres;
+  }
+
+  public void setGenres(List<Genre> genres) {
+    this.genres = genres;
+  }
+
+  public List<Country> getCountries() {
+    return countries;
+  }
+
+  public void setCountries(List<Country> countries) {
+    this.countries = countries;
+  }
+
+  public List<Review> getReviews() {
+    return reviews;
+  }
+
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
+
   @Override
   public String toString() {
-    return "MovieDao{" +
+    return "Movie{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", originalName='" + originalName + '\'' +
@@ -76,6 +106,9 @@ public class Movie {
             ", description='" + description + '\'' +
             ", rate=" + rate +
             ", price=" + price +
+            ", genres=" + genres +
+            ", countries=" + countries +
+            ", reviews=" + reviews +
             '}';
   }
 }

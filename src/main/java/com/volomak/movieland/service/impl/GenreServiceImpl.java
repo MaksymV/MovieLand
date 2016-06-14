@@ -21,21 +21,16 @@ public class GenreServiceImpl implements GenreService {
     private GenreListDtoConverter genreListDtoConverter;
 
     @Override
-    public Genre getById(int id) {
+    public Genre getById(Long id) {
         return genreDao.getById(id);
     }
 
     @Override
-    public List<GenreListDto> getByMovieId(int id) {
+    public List<GenreListDto> getByMovieId(Long id) {
         List<GenreListDto> genreListDtos = new ArrayList<>();
         for (Genre genre : genreDao.getByMovieId(id)){
             genreListDtos.add(genreListDtoConverter.convert(genre));
         }
         return genreListDtos;
-    }
-
-    @Override
-    public void add(Genre genre) {
-        genreDao.add(genre);
     }
 }

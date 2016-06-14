@@ -20,21 +20,16 @@ public class CountryServiceImpl implements CountryService {
     private CountryListDtoConverter countryListDtoConverter;
 
     @Override
-    public Country getById(int id) {
+    public Country getById(Long id) {
         return null;
     }
 
     @Override
-    public List<CountryListDto> getByMovieId(int id) {
+    public List<CountryListDto> getByMovieId(Long id) {
         List<CountryListDto> countryListDtos = new ArrayList();
         for (Country country : countryDao.getByMovieId(id)){
             countryListDtos.add(countryListDtoConverter.converter(country));
         }
         return countryListDtos;
-    }
-
-    @Override
-    public void add(Country country) {
-
     }
 }

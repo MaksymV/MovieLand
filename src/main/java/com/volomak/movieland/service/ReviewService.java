@@ -6,9 +6,7 @@ import com.volomak.movieland.service.dto.ReviewListDto;
 import java.util.List;
 
 public interface ReviewService {
-    Review getById(int id);
+    Review getById(Long id);
 
-    List<ReviewListDto> getByMovieId(int id);
-
-    void add(Review review);
+    List<ReviewListDto> getByMovieId(Long id);
 }

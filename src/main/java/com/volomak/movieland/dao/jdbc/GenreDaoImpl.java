@@ -6,13 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -31,7 +27,7 @@ public class GenreDaoImpl implements GenreDao {
     private String getGenresByMovieIdSQL;
 
     @Override
-    public Genre getById(int id) {
+    public Genre getById(Long id) {
         log.info("Start query to get genre with id {} from DB", id);
         long startTime = System.currentTimeMillis();
         Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id},
@@ -39,7 +35,7 @@ public class GenreDaoImpl implements GenreDao {
                     @Override
                     public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
                         Genre genre = new Genre();
-                        genre.setId(resultSet.getInt("id"));
+                        genre.setId(resultSet.getLong("id"));
                         genre.setName(resultSet.getString("name_c"));
                         return genre;
                     }
@@ -49,16 +45,10 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public List<Genre> getByMovieId(int id) {
+    public List<Genre> getByMovieId(Long id) {
         log.info("Start query to get genres with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL,
-                new PreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                        preparedStatement.setInt(1, id);
-                    }
-                },
+        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL, new Object[]{id},
                 new RowMapper<Genre>() {
                     @Override
                     public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -70,10 +60,4 @@ public class GenreDaoImpl implements GenreDao {
         log.info("Finish query to get genres with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genres;
     }
-
-    @Override
-    public void add(Genre genre) {
-
-    }
-
 }

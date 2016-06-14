@@ -24,7 +24,7 @@ public class GenreController {
 
     @RequestMapping(value = "genre/{genreId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getGenreById(@PathVariable int genreId){
+    public String getGenreById(@PathVariable Long genreId){
         log.info("Sending request to get city with id = {}", genreId);
         long startTime = System.currentTimeMillis();
         Genre genre = genreService.getById(genreId);

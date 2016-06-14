@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,21 +24,15 @@ public class CoutryDaoImpl implements CountryDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Country getById(int id) {
+    public Country getById(Long id) {
         return null;
     }
 
     @Override
-    public List<Country> getByMovieId(int id) {
+    public List<Country> getByMovieId(Long id) {
         log.info("Start query to get countris with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL,
-                new PreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                        preparedStatement.setInt(1, id);
-                    }
-                },
+        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL, new Object[]{id},
                 new RowMapper<Country>(){
 
                     @Override
@@ -53,10 +45,5 @@ public class CoutryDaoImpl implements CountryDao {
         );
         log.info("Finish query to get countries with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return countries;
-    }
-
-    @Override
-    public void add(Country country) {
-
     }
 }

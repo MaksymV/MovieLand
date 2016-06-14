@@ -1,8 +1,6 @@
 package com.volomak.movieland.service;
 
 import com.volomak.movieland.dao.MovieDao;
-import com.volomak.movieland.entity.Country;
-import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.service.dto.*;
 import org.junit.Assert;
@@ -69,7 +67,7 @@ public class MovieServiceTest {
 
     @Test
     public void getById(){
-        MovieDetailsDto movieDetailsDto1 = movieService.getById(1);
+        MovieDetailsDto movieDetailsDto1 = movieService.getById(1L);
         List<CountryListDto> countryListDtoList1 = movieDetailsDto1.getCountries();
         Assert.assertEquals(countryListDtoList1.get(0).getName(),"country1");
         Assert.assertEquals(countryListDtoList1.get(1).getName(),"country2");
@@ -112,32 +110,32 @@ public class MovieServiceTest {
         List<ReviewListDto> reviews2 = new ArrayList<>(Arrays.asList(review2, review3));
 
         Movie movie1 = new Movie();
-        movie1.setId(1);
+        movie1.setId(1L);
         movie1.setName("кино1");
         movie1.setOriginalName("movie1");
         movie1.setDescription("description1");
-        movie1.setYear(2001L);
+        movie1.setYear(2001);
         movie1.setPrice(10.1d);
         movie1.setRate(7.6d);
         Movie movie2 = new Movie();
-        movie2.setId(2);
+        movie2.setId(2L);
         movie2.setName("кино2");
         movie2.setOriginalName("movie2");
         movie2.setDescription("description2");
-        movie2.setYear(2002L);
+        movie2.setYear(2002);
         movie2.setPrice(9.5d);
         movie2.setRate(8.1d);
 
         List<Movie> movies1 = new ArrayList<>(Arrays.asList(movie1, movie2));
 
         Mockito.when(movieDao.getMovies()).thenReturn(movies1);
-        Mockito.when(movieDao.getById(1)).thenReturn(movie1);
-        Mockito.when(genreService.getByMovieId(1)).thenReturn(genres1);
-        Mockito.when(genreService.getByMovieId(2)).thenReturn(genres2);
-        Mockito.when(countryService.getByMovieId(1)).thenReturn(countries1);
-        Mockito.when(countryService.getByMovieId(2)).thenReturn(countries2);
-        Mockito.when(reviewService.getByMovieId(1)).thenReturn(reviews1);
-        Mockito.when(reviewService.getByMovieId(2)).thenReturn(reviews2);
+        Mockito.when(movieDao.getById(1L)).thenReturn(movie1);
+        Mockito.when(genreService.getByMovieId(1L)).thenReturn(genres1);
+        Mockito.when(genreService.getByMovieId(2L)).thenReturn(genres2);
+        Mockito.when(countryService.getByMovieId(1L)).thenReturn(countries1);
+        Mockito.when(countryService.getByMovieId(2L)).thenReturn(countries2);
+        Mockito.when(reviewService.getByMovieId(1L)).thenReturn(reviews1);
+        Mockito.when(reviewService.getByMovieId(2L)).thenReturn(reviews2);
 
 
     }
