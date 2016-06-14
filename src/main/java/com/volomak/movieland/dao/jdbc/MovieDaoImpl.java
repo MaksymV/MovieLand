@@ -23,16 +23,10 @@ public class MovieDaoImpl implements MovieDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private NamedParameterJdbcTemplate namedJdbcTemplate;
-
-    @Autowired
     private String getMovieByIdSQL;
 
     @Autowired
     private String getMoviesSQL;
-
-    @Autowired
-    private String addMovieSQL;
 
     @Override
     public Movie getById(int id) {
@@ -84,16 +78,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public void add(Movie movie) {
-        log.info("Start query to add movie {} to DB", movie);
-        long startTime = System.currentTimeMillis();
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("name", movie.getName());
-        parameterSource.addValue("original_name", movie.getOriginalName());
-        parameterSource.addValue("year_i", movie.getYear());
-        parameterSource.addValue("descriptuin_c", movie.getDescription());
-        parameterSource.addValue("rate_r", movie.getRate());
-        parameterSource.addValue("price_r", movie.getPrice());
-        namedJdbcTemplate.update(addMovieSQL, parameterSource);
-        log.info("Finish query to add movie {} to DB. It took {} ms", movie, System.currentTimeMillis() - startTime);
+
     }
+
 }

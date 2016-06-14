@@ -25,13 +25,7 @@ public class GenreDaoImpl implements GenreDao {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private NamedParameterJdbcTemplate namedJdbcTemplate;
-
-    @Autowired
     private String getGenreByIdSQL;
-
-    @Autowired
-    private String addGenreSQL;
 
     @Autowired
     private String getGenresByMovieIdSQL;
@@ -79,12 +73,7 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public void add(Genre genre) {
-        log.info("Start query to add genre {} to DB", genre);
-        long startTime = System.currentTimeMillis();
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("id", genre.getId());
-        parameterSource.addValue("name_c", genre.getName());
-        namedJdbcTemplate.update(addGenreSQL, parameterSource);
-        log.info("Finish query to add genre {} to DB. It took {} ms", genre, System.currentTimeMillis() - startTime);
+
     }
+
 }
