@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class ReviewDaoImpl implements ReviewDao {
     @Autowired
     private String getReviewsByMovieIdSQL;
@@ -38,12 +40,12 @@ public class ReviewDaoImpl implements ReviewDao {
                     public Review mapRow(ResultSet resultSet, int i) throws SQLException {
                         Review review = new Review();
                         review.setReview(resultSet.getString("review_c"));
-                        return null;
+                        return review;
                     }
                 }
 
         );
-        return null;
+        return reviews;
     }
 
     @Override

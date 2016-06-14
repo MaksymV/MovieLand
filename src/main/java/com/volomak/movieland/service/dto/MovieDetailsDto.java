@@ -7,11 +7,28 @@ public class MovieDetailsDto {
     private String name;
     private String originalName;
     private Long year;
-
     private String description;
     private Double rate;
 
     private List<GenreListDto> genres;
+    private List<CountryListDto> countries;
+    private List<ReviewListDto> reviews;
+
+    public List<CountryListDto> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<CountryListDto> countries) {
+        this.countries = countries;
+    }
+
+    public List<ReviewListDto> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewListDto> reviews) {
+        this.reviews = reviews;
+    }
 
     public Long getId() {
         return id;

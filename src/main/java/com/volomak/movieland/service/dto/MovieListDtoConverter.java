@@ -7,7 +7,6 @@ import java.util.List;
 
 @Service
 public class MovieListDtoConverter {
-
     public MovieListDto convert(Movie movie, List<GenreListDto> genres){
         MovieListDto movieListDto = new MovieListDto();
         movieListDto.setName(movie.getName());
@@ -16,6 +15,5 @@ public class MovieListDtoConverter {
         movieListDto.setRate(movie.getRate());
         movieListDto.setGenres(genres);
         return movieListDto;
-
     }
 }

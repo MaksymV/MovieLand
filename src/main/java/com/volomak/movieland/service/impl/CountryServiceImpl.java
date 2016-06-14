@@ -6,10 +6,12 @@ import com.volomak.movieland.service.CountryService;
 import com.volomak.movieland.service.dto.CountryListDto;
 import com.volomak.movieland.service.dto.CountryListDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryDao countryDao;

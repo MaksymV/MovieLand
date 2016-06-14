@@ -35,22 +35,19 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieListDtoConverter movieListDtoConverter;
 
+    @Autowired
+    private MovieDetailsDtoConverter movieDetailsDtoConverter;
+
     @Override
     public MovieDetailsDto getById(int id) {
-
-        List<MovieListDto> movieListDtos = new ArrayList<>();
-        for (Movie movie : movieDao.getMovies()) {
-            log.info("Start query to get genres with movie id {} from DB", movie.getId());
-            long startTime = System.currentTimeMillis();
-            List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
-            List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
-            List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
-            log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
-            movieListDtos.add(movieListDtoConverter.convert(movie, genres));
-
-
-
-
+        log.info("Start query to get movie with movie id {} from DB", id);
+        Movie movie = movieDao.getById(id);
+        long startTime = System.currentTimeMillis();
+        List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
+        List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
+        List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
+        log.info("Finish query to get movie with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
+        return movieDetailsDtoConverter.convert(movie, genres, countries, reviews);
     }
 
     @Override
@@ -60,8 +57,6 @@ public class MovieServiceImpl implements MovieService {
              log.info("Start query to get genres with movie id {} from DB", movie.getId());
              long startTime = System.currentTimeMillis();
              List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
-             List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
-             List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
              log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
              movieListDtos.add(movieListDtoConverter.convert(movie, genres));
         }

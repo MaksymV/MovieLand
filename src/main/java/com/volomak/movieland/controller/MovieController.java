@@ -1,8 +1,8 @@
 package com.volomak.movieland.controller;
 
 import com.google.gson.Gson;
-import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.service.MovieService;
+import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class MovieController {
     public String getMovieById(@PathVariable int movieId){
         log.info("Sending request to get movie with id = {}", movieId);
         long startTime = System.currentTimeMillis();
-        Movie movie = movieService.getById(movieId);
+        MovieDetailsDto movie = movieService.getById(movieId);
         String movieJson = new Gson().toJson(movie);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
@@ -45,7 +45,7 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movies = movieService.getMovies();
         String movieJson = new Gson().toJson(movies);
-        log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
+        log.info("Movie {} are received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
     }
 /*
