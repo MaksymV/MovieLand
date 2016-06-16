@@ -17,15 +17,15 @@
     </bean>
 
     <bean id="getGenresByMovieIdSQL" class="java.lang.String">
-        <constructor-arg value="SELECT genre.name_c FROM movie_genre join genre on (genre.id = movie_genre.genre_id) where movie_genre.movie_id = ?;"/>
+        <constructor-arg value="SELECT genre.id, genre.name_c FROM movie_genre join genre on (genre.id = movie_genre.genre_id) where movie_genre.movie_id = ?;"/>
     </bean>
 
     <bean id="getCountriesByMovieIdSQL" class="java.lang.String">
-        <constructor-arg value="SELECT country.name FROM movie_country join country on (country.id = movie_country.country_id) where movie_country.movie_id = ?;"/>
+        <constructor-arg value="SELECT country.id, country.name FROM movie_country join country on (country.id = movie_country.country_id) where movie_country.movie_id = ?;"/>
     </bean>
 
     <bean id="getReviewsByMovieIdSQL" class="java.lang.String">
-        <constructor-arg value="SELECT review.review_c FROM review where review.movie_id = ?;"/>
+        <constructor-arg value="SELECT review.id, review.movie_id, review.user_id, review.review_c FROM review where review.movie_id = ?;"/>
     </bean>
 
 </beans>

@@ -1,7 +1,10 @@
 package com.volomak.movieland.service;
 
 import com.volomak.movieland.dao.MovieDao;
+import com.volomak.movieland.entity.Country;
+import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.entity.Review;
 import com.volomak.movieland.service.dto.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,7 +63,7 @@ public class MovieServiceTest {
         List<MovieListDto> movieListDtoList = movieService.getMovies();
         MovieListDto movieListDto1 = movieListDtoList.get(0);
         Assert.assertEquals(movieListDto1.getName(),"кино1");
-        List<GenreListDto> genreListDtoList1 = movieListDto1.getGenres();
+        List<Genre> genreListDtoList1 = movieListDto1.getGenres();
         Assert.assertEquals(genreListDtoList1.get(0).getName(),"genre1");
         Assert.assertEquals(genreListDtoList1.get(1).getName(),"genre2");
     }
@@ -68,10 +71,10 @@ public class MovieServiceTest {
     @Test
     public void getById(){
         MovieDetailsDto movieDetailsDto1 = movieService.getById(1L);
-        List<CountryListDto> countryListDtoList1 = movieDetailsDto1.getCountries();
+        List<Country> countryListDtoList1 = movieDetailsDto1.getCountries();
         Assert.assertEquals(countryListDtoList1.get(0).getName(),"country1");
         Assert.assertEquals(countryListDtoList1.get(1).getName(),"country2");
-        List<ReviewListDto> reviewListDtoList1 = movieDetailsDto1.getReviews();
+        List<Review> reviewListDtoList1 = movieDetailsDto1.getReviews();
         Assert.assertEquals(reviewListDtoList1.get(0).getReview(),"review1");
         Assert.assertEquals(reviewListDtoList1.get(1).getReview(),"review2");
 
@@ -79,35 +82,35 @@ public class MovieServiceTest {
 
     private void initLocalMocks() {
 
-        CountryListDto country1 = new CountryListDto();
+        Country country1 = new Country();
         country1.setName("country1");
-        CountryListDto country2 = new CountryListDto();
+        Country country2 = new Country();
         country2.setName("country2");
-        CountryListDto country3 = new CountryListDto();
+        Country country3 = new Country();
         country3.setName("country3");
 
-        List<CountryListDto> countries1 = new ArrayList<>(Arrays.asList(country1, country2));
-        List<CountryListDto> countries2 = new ArrayList<>(Arrays.asList(country2, country3));
+        List<Country> countries1 = new ArrayList<>(Arrays.asList(country1, country2));
+        List<Country> countries2 = new ArrayList<>(Arrays.asList(country2, country3));
 
-        GenreListDto genre1 = new GenreListDto();
+        Genre genre1 = new Genre();
         genre1.setName("genre1");
-        GenreListDto genre2 = new GenreListDto();
+        Genre genre2 = new Genre();
         genre2.setName("genre2");
-        GenreListDto genre3 = new GenreListDto();
+        Genre genre3 = new Genre();
         genre3.setName("genre3");
 
-        List<GenreListDto> genres1 = new ArrayList<>(Arrays.asList(genre1, genre2));
-        List<GenreListDto> genres2 = new ArrayList<>(Arrays.asList(genre2, genre3));
+        List<Genre> genres1 = new ArrayList<>(Arrays.asList(genre1, genre2));
+        List<Genre> genres2 = new ArrayList<>(Arrays.asList(genre2, genre3));
 
-        ReviewListDto review1 = new ReviewListDto();
+        Review review1 = new Review();
         review1.setReview("review1");
-        ReviewListDto review2 = new ReviewListDto();
+        Review review2 = new Review();
         review2.setReview("review2");
-        ReviewListDto review3 = new ReviewListDto();
+        Review review3 = new Review();
         review3.setReview("review3");
 
-        List<ReviewListDto> reviews1 = new ArrayList<>(Arrays.asList(review1, review2));
-        List<ReviewListDto> reviews2 = new ArrayList<>(Arrays.asList(review2, review3));
+        List<Review> reviews1 = new ArrayList<>(Arrays.asList(review1, review2));
+        List<Review> reviews2 = new ArrayList<>(Arrays.asList(review2, review3));
 
         Movie movie1 = new Movie();
         movie1.setId(1L);

@@ -1,5 +1,9 @@
 package com.volomak.movieland.service.dto;
 
+import com.volomak.movieland.entity.Country;
+import com.volomak.movieland.entity.Genre;
+import com.volomak.movieland.entity.Review;
+
 import java.util.List;
 
 public class MovieDetailsDto {
@@ -10,25 +14,8 @@ public class MovieDetailsDto {
     private String description;
     private Double rate;
 
-    private List<GenreListDto> genres;
-    private List<CountryListDto> countries;
-    private List<ReviewListDto> reviews;
-
-    public List<CountryListDto> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<CountryListDto> countries) {
-        this.countries = countries;
-    }
-
-    public List<ReviewListDto> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<ReviewListDto> reviews) {
-        this.reviews = reviews;
-    }
+    private List<Genre> genres;
+    private List<Country> countries;
 
     public Long getId() {
         return id;
@@ -78,11 +65,30 @@ public class MovieDetailsDto {
         this.rate = rate;
     }
 
-    public List<GenreListDto> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<GenreListDto> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    private List<Review> reviews;
+
 }

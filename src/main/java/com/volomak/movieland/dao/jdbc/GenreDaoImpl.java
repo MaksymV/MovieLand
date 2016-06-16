@@ -1,6 +1,7 @@
 package com.volomak.movieland.dao.jdbc;
 
 import com.volomak.movieland.dao.GenreDao;
+import com.volomak.movieland.dao.jdbc.mapper.GenreRowMapper;
 import com.volomak.movieland.entity.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +31,7 @@ public class GenreDaoImpl implements GenreDao {
     public Genre getById(Long id) {
         log.info("Start query to get genre with id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id},
-                new RowMapper<Genre>(){
-                    @Override
-                    public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
-                        Genre genre = new Genre();
-                        genre.setId(resultSet.getLong("id"));
-                        genre.setName(resultSet.getString("name_c"));
-                        return genre;
-                    }
-                });
+        Genre genre = jdbcTemplate.queryForObject(getGenreByIdSQL, new Object[]{id}, new GenreRowMapper());
         log.info("Finish query to get genre with id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genre;
     }
@@ -48,15 +40,7 @@ public class GenreDaoImpl implements GenreDao {
     public List<Genre> getByMovieId(Long id) {
         log.info("Start query to get genres with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL, new Object[]{id},
-                new RowMapper<Genre>() {
-                    @Override
-                    public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
-                        Genre genre = new Genre();
-                        genre.setName(resultSet.getString("name_c"));
-                        return genre;
-                    }
-                });
+        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL, new Object[]{id}, new GenreRowMapper());
         log.info("Finish query to get genres with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return genres;
     }

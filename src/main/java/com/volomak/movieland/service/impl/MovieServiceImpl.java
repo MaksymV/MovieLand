@@ -24,42 +24,26 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Autowired
-    private GenreService genreService;
-
-    @Autowired
-    private CountryService countryService;
-
-    @Autowired
-    private ReviewService reviewService;
-
-    @Autowired
-    private MovieListDtoConverter movieListDtoConverter;
-
-    @Autowired
-    private MovieDetailsDtoConverter movieDetailsDtoConverter;
+    private MovieDtoConverter movieDtoConverter;
 
     @Override
     public MovieDetailsDto getById(Long id) {
         log.info("Start query to get movie with movie id {} from DB", id);
-        Movie movie = movieDao.getById(id);
         long startTime = System.currentTimeMillis();
-        List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
-        List<CountryListDto> countries = countryService.getByMovieId(movie.getId());
-        List<ReviewListDto> reviews = reviewService.getByMovieId(movie.getId());
+        Movie movie = movieDao.getById(id);
         log.info("Finish query to get movie with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
-        return movieDetailsDtoConverter.convert(movie, genres, countries, reviews);
+        return movieDtoConverter.toDetails(movie);
     }
 
     @Override
     public List<MovieListDto> getMovies() {
+        log.info("Start query to get all movies from DB");
+        long startTime = System.currentTimeMillis();
         List<MovieListDto> movieListDtos = new ArrayList<>();
         for (Movie movie : movieDao.getMovies()) {
-             log.info("Start query to get genres with movie id {} from DB", movie.getId());
-             long startTime = System.currentTimeMillis();
-             List<GenreListDto> genres = genreService.getByMovieId(movie.getId());
-             log.info("Finish query to get genres with movie id {} from DB. It took {} ms", movie.getId(), System.currentTimeMillis() - startTime);
-             movieListDtos.add(movieListDtoConverter.convert(movie, genres));
+             movieListDtos.add(movieDtoConverter.toList(movie));
         }
+        log.info("Finish query to get all movies from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movieListDtos;
     }
 }

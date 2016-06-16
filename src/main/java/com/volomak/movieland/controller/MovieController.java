@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.volomak.movieland.service.MovieService;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
+import com.volomak.movieland.util.JsonConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
+    private JsonConverter jsonConverter;
+
+    @Autowired
     private MovieService movieService;
 
     @RequestMapping(value = "/movie/{movieId}", produces = "application/json;charset=UTF-8")
@@ -27,7 +31,7 @@ public class MovieController {
         log.info("Sending request to get movie with id = {}", movieId);
         long startTime = System.currentTimeMillis();
         MovieDetailsDto movie = movieService.getById(movieId);
-        String movieJson = new Gson().toJson(movie);
+        String movieJson = jsonConverter.toJson(movie);
         log.info("Movie {} is received. It took {} ms", movieJson, System.currentTimeMillis() - startTime);
         return movieJson;
     }
@@ -38,7 +42,7 @@ public class MovieController {
         log.info("Sending request to get movies");
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movies = movieService.getMovies();
-        String movieJson = new Gson().toJson(movies);
+        String movieJson = jsonConverter.toJson(movies);
         log.info("Movies are received. It took {} ms", System.currentTimeMillis() - startTime);
         return movieJson;
     }

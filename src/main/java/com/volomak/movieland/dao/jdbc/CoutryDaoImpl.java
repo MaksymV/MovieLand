@@ -1,6 +1,7 @@
 package com.volomak.movieland.dao.jdbc;
 
 import com.volomak.movieland.dao.CountryDao;
+import com.volomak.movieland.dao.jdbc.mapper.CountryRowMapper;
 import com.volomak.movieland.entity.Country;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,25 +25,10 @@ public class CoutryDaoImpl implements CountryDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Country getById(Long id) {
-        return null;
-    }
-
-    @Override
     public List<Country> getByMovieId(Long id) {
         log.info("Start query to get countris with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL, new Object[]{id},
-                new RowMapper<Country>(){
-
-                    @Override
-                    public Country mapRow(ResultSet resultSet, int i) throws SQLException {
-                        Country country = new Country();
-                        country.setName(resultSet.getString("name"));
-                        return country;
-                    }
-                }
-        );
+        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL, new Object[]{id}, new CountryRowMapper());
         log.info("Finish query to get countries with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return countries;
     }
