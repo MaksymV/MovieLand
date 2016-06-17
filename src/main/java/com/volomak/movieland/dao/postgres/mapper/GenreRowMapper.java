@@ -1,4 +1,4 @@
-package com.volomak.movieland.dao.jdbc.mapper;
+package com.volomak.movieland.dao.postgres.mapper;
 
 import com.volomak.movieland.entity.Genre;
 import org.springframework.jdbc.core.RowMapper;

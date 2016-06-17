@@ -8,4 +8,6 @@ public interface MovieDao {
     Movie getById(Long id);
 
     List<Movie> getMovies();
+
+    List<Movie> search();
 }
