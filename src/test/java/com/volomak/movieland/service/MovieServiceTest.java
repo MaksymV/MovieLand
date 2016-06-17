@@ -61,11 +61,11 @@ public class MovieServiceTest {
     @Test
     public void getMoviesTest(){
         List<MovieListDto> movieListDtoList = movieService.getMovies();
-        MovieListDto movieListDto1 = movieListDtoList.get(0);
-        Assert.assertEquals(movieListDto1.getName(),"кино1");
-        List<Genre> genreListDtoList1 = movieListDto1.getGenres();
-        Assert.assertEquals(genreListDtoList1.get(0).getName(),"genre1");
-        Assert.assertEquals(genreListDtoList1.get(1).getName(),"genre2");
+        MovieListDto movies1 = movieListDtoList.get(0);
+        Assert.assertEquals(movies1.getName(),"кино1");
+        List<Genre> genres1 = movies1.getGenres();
+        Assert.assertEquals(genres1.get(0).getName(),"genre1");
+        Assert.assertEquals(genres1.get(1).getName(),"genre2");
     }
 
     @Test
@@ -120,6 +120,10 @@ public class MovieServiceTest {
         movie1.setYear(2001);
         movie1.setPrice(10.1d);
         movie1.setRate(7.6d);
+        movie1.setGenres(genres1);
+        movie1.setCountries(countries1);
+        movie1.setReviews(reviews1);
+
         Movie movie2 = new Movie();
         movie2.setId(2L);
         movie2.setName("кино2");
@@ -128,6 +132,9 @@ public class MovieServiceTest {
         movie2.setYear(2002);
         movie2.setPrice(9.5d);
         movie2.setRate(8.1d);
+        movie2.setGenres(genres2);
+        movie2.setCountries(countries2);
+        movie2.setReviews(reviews2);
 
         List<Movie> movies1 = new ArrayList<>(Arrays.asList(movie1, movie2));
 

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class JsonConverter {
-    JsonConverter(){
-        builder.setPrettyPrinting().serializeNulls();
-        gson = builder.create();
-    }
+//    JsonConverter(){
+//        builder.setPrettyPrinting().serializeNulls();
+//        gson = builder.create();
+//    }
     private GsonBuilder builder;
     private Gson gson;
 

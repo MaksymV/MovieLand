@@ -12,6 +12,8 @@ public class MovieListDto {
     private String description;
     private Double rate;
 
+    private List<Genre> genres;
+
     public Long getId() {
         return id;
     }
@@ -68,6 +70,5 @@ public class MovieListDto {
         this.genres = genres;
     }
 
-    private List<Genre> genres;
 }
 

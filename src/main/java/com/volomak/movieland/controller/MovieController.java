@@ -1,6 +1,5 @@
 package com.volomak.movieland.controller;
 
-import com.google.gson.Gson;
 import com.volomak.movieland.service.MovieService;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/v1/movie")
 public class MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -25,7 +25,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @RequestMapping(value = "/movie/{movieId}", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{movieId}", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getMovieById(@PathVariable Long movieId){
         log.info("Sending request to get movie with id = {}", movieId);
