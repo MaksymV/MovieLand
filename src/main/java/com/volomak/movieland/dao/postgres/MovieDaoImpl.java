@@ -9,6 +9,7 @@ import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.entity.Review;
+import com.volomak.movieland.service.dto.MovieSearchRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,13 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> search() {
+    public List<Movie> search(MovieSearchRequestDto movieSearchRequestDto) {
+        log.info("Start searching of movies");
+        long startTime = System.currentTimeMillis();
+        List<Movie> movies = jdbcTemplate.query(getMoviesSQL, new MovieRowMapper());
+        log.info("Finish searching of movies. It took {} ms", System.currentTimeMillis() - startTime);
         return null;
+
     }
 
     private Movie enrichMovie(Movie movie){
