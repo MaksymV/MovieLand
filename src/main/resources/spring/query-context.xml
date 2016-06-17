@@ -5,19 +5,27 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="getGenreByIdSQL" class="java.lang.String">
-        <constructor-arg value="SELECT id, name FROM genre where id = ?;"/>
-    </bean>
-
-    <bean id="addGenreSQL" class="java.lang.String">
-        <constructor-arg value="INSERT INTO genre (name) VALUES (:name);"/>
+        <constructor-arg value="SELECT id, name_c FROM genre where id = ?;"/>
     </bean>
 
     <bean id="getMovieByIdSQL" class="java.lang.String">
         <constructor-arg value="SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie where id = ?;"/>
     </bean>
 
-    <bean id="addMovieSQL" class="java.lang.String">
-        <constructor-arg value="INSERT INTO movie (name, original_name, year_i, description_c, rate_r, price_r) VALUES (:name, :original_name, :year_i, :description_c, :rate_r, :price_r);"/>
+    <bean id="getMoviesSQL" class="java.lang.String">
+        <constructor-arg value="SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie;"/>
+    </bean>
+
+    <bean id="getGenresByMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="SELECT genre.id, genre.name_c FROM movie_genre join genre on (genre.id = movie_genre.genre_id) where movie_genre.movie_id = ?;"/>
+    </bean>
+
+    <bean id="getCountriesByMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="SELECT country.id, country.name FROM movie_country join country on (country.id = movie_country.country_id) where movie_country.movie_id = ?;"/>
+    </bean>
+
+    <bean id="getReviewsByMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="SELECT review.id, review.movie_id, review.user_id, review.review_c FROM review where review.movie_id = ?;"/>
     </bean>
 
 </beans>

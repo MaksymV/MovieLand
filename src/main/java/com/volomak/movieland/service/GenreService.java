@@ -2,8 +2,10 @@ package com.volomak.movieland.service;
 
 import com.volomak.movieland.entity.Genre;
 
-public interface GenreService {
-    Genre getById(int id);
+import java.util.List;
 
-    void add(Genre genre);
+public interface GenreService {
+    public Genre getById(Long id);
+
+    List<Genre> getByMovieId(Long id);
 }

@@ -1,10 +1,14 @@
 package com.volomak.movieland.dao;
 
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.service.dto.MovieSearchRequestDto;
+
+import java.util.List;
 
 public interface MovieDao {
-    Movie getById(int id);
-//1111111111111111111111111111
-    void add(Movie movie);
+    Movie getById(Long id);
 
+    List<Movie> getMovies();
+
+    List<Movie> search(MovieSearchRequestDto movieSearchRequestDto);
 }

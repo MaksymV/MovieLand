@@ -2,8 +2,8 @@ package com.volomak.movieland.dao;
 
 import com.volomak.movieland.entity.Review;
 
-public interface ReviewDao {
-    Review getById(int id);
+import java.util.List;
 
-    void add(Review review);
+public interface ReviewDao {
+    List<Review> getByMovieId(Long id);
 }

@@ -2,8 +2,10 @@ package com.volomak.movieland.dao;
 
 import com.volomak.movieland.entity.Genre;
 
-public interface GenreDao {
-    Genre getById(int id);
+import java.util.List;
 
-    void add(Genre genre);
+public interface GenreDao {
+    Genre getById(Long id);
+
+    List<Genre> getByMovieId(Long id);
 }

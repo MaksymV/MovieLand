@@ -27,11 +27,5 @@
         <property name="username" value="postgres"/>
         <property name="password" value="q1w2e3r4t5y6"/>
     </bean>
-    <!--
-    <jdbc:embedded-database id="dataSource" type="HSQL">
-        <jdbc:script location="classpath:/db/create-db.sql"/>
-        <jdbc:script location="classpath:db/insert-cities.sql"/>
-    </jdbc:embedded-database>
-    -->
 
 </beans>

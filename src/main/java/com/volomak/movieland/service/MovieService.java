@@ -1,9 +1,12 @@
 package com.volomak.movieland.service;
 
-import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.service.dto.MovieDetailsDto;
+import com.volomak.movieland.service.dto.MovieListDto;
+
+import java.util.List;
 
 public interface MovieService {
-    Movie getById(int id);
+    MovieDetailsDto getById(Long id);
 
-    void add(Movie movie);
+    List<MovieListDto> getMovies();
 }
