@@ -3,14 +3,13 @@ package com.volomak.movieland.controller;
 import com.volomak.movieland.service.MovieService;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
+import com.volomak.movieland.service.dto.MovieSearchRequestDto;
 import com.volomak.movieland.util.JsonConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,12 +37,37 @@ public class MovieController {
 
     @RequestMapping(value = "/movies", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String getMovies(){
+    public String getMovies(@RequestParam(value = "rating", required = false) String ratingOrder
+                           ,@RequestParam(value = "price", required = false) String priceOrder){
         log.info("Sending request to get movies");
         long startTime = System.currentTimeMillis();
-        List<MovieListDto> movies = movieService.getMovies();
+        List<MovieListDto> movies = movieService.getMovies(ratingOrder, priceOrder);
         String movieJson = jsonConverter.toJson(movies);
         log.info("Movies are received. It took {} ms", System.currentTimeMillis() - startTime);
         return movieJson;
     }
+
+    @RequestMapping(value="/search", method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String search(@RequestBody MovieSearchRequestDto movieSearchRequestDto){
+        log.info("Sending request to find movies");
+        long startTime = System.currentTimeMillis();
+        List<MovieListDto> movies = movieService.search(movieSearchRequestDto);
+        String movieJson = jsonConverter.toJson(movies);
+        log.info("Movies are found. It took {} ms", System.currentTimeMillis() - startTime);
+        return movieJson;
+    }
+
+    @RequestMapping(value="/search/default", method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String searchDefault(){
+        log.info("Sending request to find movies");
+        long startTime = System.currentTimeMillis();
+        List<MovieListDto> movies = movieService.searchDefault();
+        String movieJson = jsonConverter.toJson(movies);
+        log.info("Movies are found. It took {} ms", System.currentTimeMillis() - startTime);
+        return movieJson;
+    }
+
+
 }

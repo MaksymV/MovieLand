@@ -1,9 +1,6 @@
 package com.volomak.movieland.dao.postgres;
 
-import com.volomak.movieland.dao.CountryDao;
-import com.volomak.movieland.dao.GenreDao;
-import com.volomak.movieland.dao.MovieDao;
-import com.volomak.movieland.dao.ReviewDao;
+import com.volomak.movieland.dao.*;
 import com.volomak.movieland.dao.postgres.mapper.MovieRowMapper;
 import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
@@ -40,6 +37,9 @@ public class MovieDaoImpl implements MovieDao {
     @Autowired
     private String getMoviesSQL;
 
+    @Autowired
+    private QueryBiulder queryBiulder;
+
     @Override
     public Movie getById(Long id) {
         log.info("Start query to get movie with id {} from DB", id);
@@ -66,9 +66,27 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> search(MovieSearchRequestDto movieSearchRequestDto) {
         log.info("Start searching of movies");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(getMoviesSQL, new MovieRowMapper());
+        List<Movie> movies = jdbcTemplate.query(queryBiulder.movieSearch(movieSearchRequestDto), new MovieRowMapper());
+        for (Movie movie : movies) {
+            enrichMovie(movie);
+        }
         log.info("Finish searching of movies. It took {} ms", System.currentTimeMillis() - startTime);
-        return null;
+        return movies;
+
+    }
+
+    @Override
+    public List<Movie> searchDefault() {
+        log.info("Start searching of movies");
+        long startTime = System.currentTimeMillis();
+        MovieSearchRequestDto movieSearchRequestDto = new MovieSearchRequestDto();
+        movieSearchRequestDto.setOriginalName("the green mile");
+        List<Movie> movies = jdbcTemplate.query(queryBiulder.movieSearch(movieSearchRequestDto), new MovieRowMapper());
+        for (Movie movie : movies) {
+            enrichMovie(movie);
+        }
+        log.info("Finish searching of movies. It took {} ms", System.currentTimeMillis() - startTime);
+        return movies;
 
     }
 

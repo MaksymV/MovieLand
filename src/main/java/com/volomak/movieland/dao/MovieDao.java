@@ -11,4 +11,6 @@ public interface MovieDao {
     List<Movie> getMovies();
 
     List<Movie> search(MovieSearchRequestDto movieSearchRequestDto);
+
+    List<Movie> searchDefault();
 }

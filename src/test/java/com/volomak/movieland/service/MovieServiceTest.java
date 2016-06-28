@@ -60,7 +60,7 @@ public class MovieServiceTest {
 
     @Test
     public void getMoviesTest(){
-        List<MovieListDto> movieListDtoList = movieService.getMovies();
+        List<MovieListDto> movieListDtoList = movieService.getMovies("asc", "asc");
         MovieListDto movies1 = movieListDtoList.get(0);
         Assert.assertEquals(movies1.getName(),"кино1");
         List<Genre> genres1 = movies1.getGenres();
