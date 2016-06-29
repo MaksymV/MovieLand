@@ -38,10 +38,11 @@ public class MovieController {
     @RequestMapping(value = "/movies", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getMovies(@RequestParam(value = "rating", required = false) String ratingOrder
-                           ,@RequestParam(value = "price", required = false) String priceOrder){
+                           ,@RequestParam(value = "price", required = false) String priceOrder
+                           ,@RequestParam(value = "page", defaultValue = "1") int page){
         log.info("Sending request to get movies");
         long startTime = System.currentTimeMillis();
-        List<MovieListDto> movies = movieService.getMovies(ratingOrder, priceOrder);
+        List<MovieListDto> movies = movieService.getMovies(ratingOrder, priceOrder, page);
         String movieJson = jsonConverter.toJson(movies);
         log.info("Movies are received. It took {} ms", System.currentTimeMillis() - startTime);
         return movieJson;

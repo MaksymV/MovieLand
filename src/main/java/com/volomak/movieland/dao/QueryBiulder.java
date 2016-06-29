@@ -11,7 +11,7 @@ public class QueryBiulder {
     public String movieSearch(MovieSearchRequestDto movieSearchRequestDto){
         StringBuilder stringBuilderSelect = new StringBuilder();
         StringBuilder stringBuilderWhere = new StringBuilder();
-        List variables = new ArrayList<Object>();
+        List<Object> variables = new ArrayList<>();
 
         stringBuilderSelect.append("SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n");
 
@@ -47,5 +47,30 @@ public class QueryBiulder {
         }
 
         return String.format(stringBuilderSelect.append(stringBuilderWhere).toString(), variables.toArray());
+    }
+
+    public String getMovies(String ratingOrder, String priceOrder, int fromIndex, int toIndex){
+        StringBuilder stringBuilderSelect = new StringBuilder();
+        StringBuilder stringBuilderOrder = new StringBuilder();
+        StringBuilder stringBuilderWhere = new StringBuilder();
+        List<Object> variables = new ArrayList<>();
+
+        stringBuilderSelect.append("SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n");
+        stringBuilderWhere.append("WHERE rownum between %d and %d ");
+        variables.add(fromIndex);
+        variables.add(toIndex);
+
+        if (ratingOrder != null){
+            stringBuilderOrder.append(" rate %s ");
+            variables.add(ratingOrder);
+        }
+        if (priceOrder != null){
+            stringBuilderOrder.append(" price %s ");
+            variables.add(priceOrder);
+        }
+        if (stringBuilderOrder.length() != 0){
+            stringBuilderOrder.insert(0, " order by ");
+        }
+        return String.format(stringBuilderSelect.append(stringBuilderWhere).append(stringBuilderOrder).toString(), variables);
     }
 }

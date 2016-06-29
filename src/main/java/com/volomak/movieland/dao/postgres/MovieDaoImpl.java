@@ -51,10 +51,10 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getMovies() {
+    public List<Movie> getMovies(String ratingOrder, String priceOrder, int fromIndex, int toIndex) {
         log.info("Start query to get movies from DB");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(getMoviesSQL, new MovieRowMapper());
+        List<Movie> movies = jdbcTemplate.query(queryBiulder.getMovies(ratingOrder, priceOrder, fromIndex, toIndex), new MovieRowMapper());
         for (Movie movie : movies) {
             enrichMovie(movie);
         }

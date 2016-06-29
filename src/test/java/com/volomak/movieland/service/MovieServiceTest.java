@@ -60,7 +60,7 @@ public class MovieServiceTest {
 
     @Test
     public void getMoviesTest(){
-        List<MovieListDto> movieListDtoList = movieService.getMovies("asc", "asc");
+        List<MovieListDto> movieListDtoList = movieService.getMovies("asc", "asc", 1);
         MovieListDto movies1 = movieListDtoList.get(0);
         Assert.assertEquals(movies1.getName(),"кино1");
         List<Genre> genres1 = movies1.getGenres();
@@ -138,7 +138,7 @@ public class MovieServiceTest {
 
         List<Movie> movies1 = new ArrayList<>(Arrays.asList(movie1, movie2));
 
-        Mockito.when(movieDao.getMovies()).thenReturn(movies1);
+        Mockito.when(movieDao.getMovies("asc", "asc", 1, 5)).thenReturn(movies1);
         Mockito.when(movieDao.getById(1L)).thenReturn(movie1);
         Mockito.when(genreService.getByMovieId(1L)).thenReturn(genres1);
         Mockito.when(genreService.getByMovieId(2L)).thenReturn(genres2);
