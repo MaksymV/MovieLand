@@ -8,7 +8,9 @@ import java.util.List;
 public interface MovieDao {
     Movie getById(Long id);
 
-    List<Movie> getMovies();
+    List<Movie> getMovies(String ratingOrder, String priceOrder, int fromIndex, int toIndex);
 
     List<Movie> search(MovieSearchRequestDto movieSearchRequestDto);
+
+    List<Movie> searchDefault();
 }

@@ -13,7 +13,7 @@ public class JsonConverter {
     JsonConverter(){
         GsonBuilder builder = new GsonBuilder();
         builder.create();
-        builder.setPrettyPrinting().serializeNulls();
+        builder.setPrettyPrinting();
         gson = builder.create();
     }
     private Gson gson;

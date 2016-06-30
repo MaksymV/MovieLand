@@ -1,8 +1,12 @@
-package com.volomak.movieland.service.dto;
+package com.volomak.movieland.service.dto.util;
 
+import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.service.dto.MovieDetailsDto;
+import com.volomak.movieland.service.dto.MovieListDto;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,7 +30,13 @@ public class MovieDtoConverter {
         movieListDto.setOriginalName(movie.getOriginalName());
         movieListDto.setYear(movie.getYear());
         movieListDto.setRate(movie.getRate());
-        movieListDto.setGenres(movie.getGenres());
+        List<Genre> genres = movie.getGenres();
+        List<Genre> genres2 = new ArrayList<>();
+        for(Genre genre : genres){
+            genre.setId(null);
+            genres2.add(genre);
+        }
+        movieListDto.setGenres(genres2);
         return movieListDto;
     }
 }
