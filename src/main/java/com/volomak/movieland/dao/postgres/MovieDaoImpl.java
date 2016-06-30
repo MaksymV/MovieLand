@@ -2,6 +2,7 @@ package com.volomak.movieland.dao.postgres;
 
 import com.volomak.movieland.dao.*;
 import com.volomak.movieland.dao.postgres.mapper.MovieRowMapper;
+import com.volomak.movieland.dao.postgres.util.QueryBiulder;
 import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
@@ -51,10 +52,10 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getMovies(String ratingOrder, String priceOrder, int fromIndex, int toIndex) {
+    public List<Movie> getMovies(String ratingOrder, String priceOrder, int page) {
         log.info("Start query to get movies from DB");
         long startTime = System.currentTimeMillis();
-        List<Movie> movies = jdbcTemplate.query(queryBiulder.getMovies(ratingOrder, priceOrder, fromIndex, toIndex), new MovieRowMapper());
+        List<Movie> movies = jdbcTemplate.query(queryBiulder.getMovies(ratingOrder, priceOrder, page), new MovieRowMapper());
         for (Movie movie : movies) {
             enrichMovie(movie);
         }
