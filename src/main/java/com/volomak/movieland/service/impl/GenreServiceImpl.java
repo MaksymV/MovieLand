@@ -24,4 +24,14 @@ public class GenreServiceImpl implements GenreService {
     public List<Genre> getByMovieId(Long id) {
         return genreDao.getByMovieId(id);
     }
+
+    @Override
+    public List<Genre> getIdsByMovieId(Long id) {
+        return genreDao.getIdsByMovieId(id);
+    }
+
+    @Override
+    public List<Genre> getGenres() {
+        return genreDao.getGenres();
+    }
 }

@@ -20,7 +20,7 @@ public class QueryBiulder {
     public static final String JOIN_GENRE = "inner join movie_genre on (movie_genre.movie_id  = movie.id) inner join genre on (genre.id = movie_genre.genre_id)\n";
     public static final String WHERE = "where ";
     public static final String ORDER = "order by ";
-    public static final String LIMIT = "\noffset %d limit %d";
+    public static final String LIMIT = "offset %d limit %d";
     public static final String ORDER_RATE = "rate_r %s";
     public static final String ORDER_PRICE = "price_r %s";
 
@@ -73,16 +73,16 @@ public class QueryBiulder {
 
         stringBuilderSelect.append(SELECT_FROM_MOVIE);
 
-        if (ratingOrder != null){
+        if (ratingOrder != "" && ratingOrder != null){
             stringBuilderOrder.append(stringBuilderOrder.length() == 0 ? "" : ", ").append(ORDER_RATE);
             variables.add(ratingOrder);
         }
-        if (priceOrder != null){
+        if (priceOrder != "" && priceOrder != null){
             stringBuilderOrder.append(stringBuilderOrder.length() == 0 ? "" : ", ").append(ORDER_PRICE);
             variables.add(priceOrder);
         }
         if (stringBuilderOrder.length() != 0){
-            stringBuilderOrder.insert(0, ORDER);
+            stringBuilderOrder.insert(0, ORDER).append("\n");
         }
 
         stringBuilderLimit.append(LIMIT);

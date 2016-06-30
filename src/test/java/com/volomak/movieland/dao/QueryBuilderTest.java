@@ -60,6 +60,12 @@ public class QueryBuilderTest {
         "offset 5 limit 5";
         query = queryBiulder.getMovies("asc", "asc", 2);
         Assert.assertEquals(expectedResult, query);
+
+        expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
+        "offset 5 limit 5";
+        query = queryBiulder.getMovies("", "", 2);
+        Assert.assertEquals(expectedResult, query);
+
     }
 
      private void initLocalMocks() {

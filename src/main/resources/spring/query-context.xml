@@ -20,6 +20,14 @@
         <constructor-arg value="SELECT genre.id, genre.name_c FROM movie_genre join genre on (genre.id = movie_genre.genre_id) where movie_genre.movie_id = ?;"/>
     </bean>
 
+    <bean id="getGenresIdByMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="SELECT genre_id as id, null as name_c FROM movie_genre where movie_id = ?;"/>
+    </bean>
+
+    <bean id="getGenres" class="java.lang.String">
+        <constructor-arg value="SELECT id, name_c FROM genre;"/>
+    </bean>
+
     <bean id="getCountriesByMovieIdSQL" class="java.lang.String">
         <constructor-arg value="SELECT country.id, country.name FROM movie_country join country on (country.id = movie_country.country_id) where movie_country.movie_id = ?;"/>
     </bean>

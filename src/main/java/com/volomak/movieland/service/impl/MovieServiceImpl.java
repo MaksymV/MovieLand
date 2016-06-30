@@ -1,8 +1,16 @@
 package com.volomak.movieland.service.impl;
 
+import com.volomak.movieland.dao.CountryDao;
 import com.volomak.movieland.dao.MovieDao;
+import com.volomak.movieland.entity.Country;
+import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.entity.Review;
+import com.volomak.movieland.service.CountryService;
+import com.volomak.movieland.service.GenreService;
 import com.volomak.movieland.service.MovieService;
+import com.volomak.movieland.service.ReviewService;
+import com.volomak.movieland.service.cache.GenreCache;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
@@ -25,13 +33,26 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Autowired
+    private GenreService genreService;
+
+    @Autowired
+    private CountryService countryService;
+
+    @Autowired
     private MovieDtoConverter movieDtoConverter;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private GenreCache genreCache;
 
     @Override
     public MovieDetailsDto getById(Long id) {
         log.info("Start query to get movie with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
         Movie movie = movieDao.getById(id);
+        enrichMovie(movie);
         log.info("Finish query to get movie with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return movieDtoConverter.toDetails(movie);
     }
@@ -42,7 +63,7 @@ public class MovieServiceImpl implements MovieService {
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movieListDtos = new ArrayList<>();
         List<Movie> movies = movieDao.getMovies(ratingOrder, priceOrder, page);
-        movies.sort(new MovieComparator(ratingOrder, priceOrder));
+        enrichMovie(movies);
         for (Movie movie : movies) {
              movieListDtos.add(movieDtoConverter.toList(movie));
         }
@@ -55,7 +76,9 @@ public class MovieServiceImpl implements MovieService {
         log.info("Start query to find movies from DB");
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movieListDtos = new ArrayList<>();
-        for (Movie movie : movieDao.search(movieSearchRequestDto)) {
+        List<Movie> movies = movieDao.search(movieSearchRequestDto);
+        enrichMovie(movies);
+        for (Movie movie : movies) {
             movieListDtos.add(movieDtoConverter.toList(movie));
         }
         log.info("Finish query to find movies from DB. It took {} ms", System.currentTimeMillis() - startTime);
@@ -67,10 +90,32 @@ public class MovieServiceImpl implements MovieService {
         log.info("Start query to find DEFAULT movie from DB");
         long startTime = System.currentTimeMillis();
         List<MovieListDto> movieListDtos = new ArrayList<>();
-        for (Movie movie : movieDao.searchDefault()) {
+        List<Movie> movies = movieDao.searchDefault();
+        enrichMovie(movies);
+        for (Movie movie : movies) {
             movieListDtos.add(movieDtoConverter.toList(movie));
         }
         log.info("Finish query to find DEFAULT movie from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movieListDtos;
+    }
+
+    private List<Movie> enrichMovie(List<Movie> movies){
+        for (Movie movie : movies) {
+            enrichMovie(movie);
+        }
+        return movies;
+    }
+
+    private Movie enrichMovie(Movie movie){
+        List<Genre> genres = genreService.getIdsByMovieId(movie.getId());
+        for (Genre genre: genres) {
+            genre.setName(genreCache.getGenres().get(genre.getId()).getName());
+        }
+        movie.setGenres(genres);
+        List<Country> countries = countryService.getByMovieId(movie.getId());
+        movie.setCountries(countries);
+        List<Review> reviews = reviewService.getByMovieId(movie.getId());
+        movie.setReviews(reviews);
+        return movie;
     }
 }
