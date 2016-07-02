@@ -6,7 +6,6 @@ import com.volomak.movieland.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,7 +25,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Genre> getIdsByMovieId(Long id) {
+    public List<Long> getIdsByMovieId(Long id) {
         return genreDao.getIdsByMovieId(id);
     }
 

@@ -1,9 +1,7 @@
 package com.volomak.movieland.service.impl;
 
-import com.volomak.movieland.dao.CountryDao;
 import com.volomak.movieland.dao.MovieDao;
 import com.volomak.movieland.entity.Country;
-import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.entity.Review;
 import com.volomak.movieland.service.CountryService;
@@ -15,7 +13,6 @@ import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
 import com.volomak.movieland.service.dto.util.MovieDtoConverter;
-import com.volomak.movieland.util.MovieComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,20 +82,6 @@ public class MovieServiceImpl implements MovieService {
         return movieListDtos;
     }
 
-    @Override
-    public List<MovieListDto> searchDefault() {
-        log.info("Start query to find DEFAULT movie from DB");
-        long startTime = System.currentTimeMillis();
-        List<MovieListDto> movieListDtos = new ArrayList<>();
-        List<Movie> movies = movieDao.searchDefault();
-        enrichMovie(movies);
-        for (Movie movie : movies) {
-            movieListDtos.add(movieDtoConverter.toList(movie));
-        }
-        log.info("Finish query to find DEFAULT movie from DB. It took {} ms", System.currentTimeMillis() - startTime);
-        return movieListDtos;
-    }
-
     private List<Movie> enrichMovie(List<Movie> movies){
         for (Movie movie : movies) {
             enrichMovie(movie);
@@ -107,13 +90,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private Movie enrichMovie(Movie movie){
-        List<Genre> genres = genreService.getIdsByMovieId(movie.getId());
-        for (Genre genre: genres) {
-            genre.setName(genreCache.getGenres().get(genre.getId()).getName());
-        }
-        movie.setGenres(genres);
+        List<Long> genreIds = genreService.getIdsByMovieId(movie.getId());
+        movie.setGenres(genreCache.getGenres(genreIds));
+
         List<Country> countries = countryService.getByMovieId(movie.getId());
         movie.setCountries(countries);
+
         List<Review> reviews = reviewService.getByMovieId(movie.getId());
         movie.setReviews(reviews);
         return movie;

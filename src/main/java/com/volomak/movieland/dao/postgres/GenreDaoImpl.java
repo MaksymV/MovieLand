@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreDaoImpl implements GenreDao {
@@ -47,12 +48,13 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public List<Genre> getIdsByMovieId(Long id) {
+    public List<Long> getIdsByMovieId(Long id) {
         log.info("Start query to get genre IDs with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Genre> genres = jdbcTemplate.query(getGenresByMovieIdSQL, new Object[]{id}, genreRowMapper);
+        List<Genre> genres = getByMovieId(id);
+        List<Long> genresIds = genres.stream().map(Genre::getId).collect(Collectors.toList());
         log.info("Finish query to get genre IDs with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
-        return genres;
+        return genresIds;
     }
 
     @Override

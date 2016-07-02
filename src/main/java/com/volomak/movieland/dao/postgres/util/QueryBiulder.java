@@ -3,6 +3,7 @@ package com.volomak.movieland.dao.postgres.util;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
 import com.volomak.movieland.util.Constant;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +74,11 @@ public class QueryBiulder {
 
         stringBuilderSelect.append(SELECT_FROM_MOVIE);
 
-        if (ratingOrder != "" && ratingOrder != null){
+        if (!StringUtils.isEmpty(ratingOrder)){
             stringBuilderOrder.append(stringBuilderOrder.length() == 0 ? "" : ", ").append(ORDER_RATE);
             variables.add(ratingOrder);
         }
-        if (priceOrder != "" && priceOrder != null){
+        if (!StringUtils.isEmpty(priceOrder)){
             stringBuilderOrder.append(stringBuilderOrder.length() == 0 ? "" : ", ").append(ORDER_PRICE);
             variables.add(priceOrder);
         }

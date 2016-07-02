@@ -11,6 +11,4 @@ public interface MovieDao {
     List<Movie> getMovies(String ratingOrder, String priceOrder, int page);
 
     List<Movie> search(MovieSearchRequestDto movieSearchRequestDto);
-
-    List<Movie> searchDefault();
 }

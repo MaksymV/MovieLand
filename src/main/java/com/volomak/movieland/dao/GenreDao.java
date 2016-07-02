@@ -9,7 +9,7 @@ public interface GenreDao {
 
     List<Genre> getByMovieId(Long id);
 
-    List<Genre> getIdsByMovieId(Long id);
+    List<Long> getIdsByMovieId(Long id);
 
-    public List<Genre> getGenres();
+    List<Genre> getGenres();
 }

@@ -13,9 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.sql.SQLException;
 
-/**
- * Created by grey4 on 17.06.2016.
- */
 public class QueryBuilderTest {
     @Mock
     public MovieSearchRequestDto movieSearchRequestDto;
@@ -79,12 +76,10 @@ public class QueryBuilderTest {
          country2.setId(2L);
          country2.setName("country2");
          Mockito.when(movieSearchRequestDto.getCountry()).thenReturn(country, country, null, country2, country2);
-         Genre genre = new Genre();
-         genre.setId(1L);
-         genre.setName("genre1");
-         Genre genre2 = new Genre();
-         genre2.setId(1L);
-         genre2.setName("genre2");
+
+         Genre genre = new Genre(1L, "genre1");
+         Genre genre2 = new Genre(2L, "genre2");
+
          Mockito.when(movieSearchRequestDto.getGenre()).thenReturn(genre, genre, null, genre2, genre2);
     }
 

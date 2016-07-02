@@ -1,12 +1,9 @@
 package com.volomak.movieland.dao.postgres;
 
-import com.volomak.movieland.dao.*;
+import com.volomak.movieland.dao.MovieDao;
 import com.volomak.movieland.dao.postgres.mapper.MovieRowMapper;
 import com.volomak.movieland.dao.postgres.util.QueryBiulder;
-import com.volomak.movieland.entity.Country;
-import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
-import com.volomak.movieland.entity.Review;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,15 +55,4 @@ public class MovieDaoImpl implements MovieDao {
 
     }
 
-    @Override
-    public List<Movie> searchDefault() {
-        log.info("Start searching of movies");
-        long startTime = System.currentTimeMillis();
-        MovieSearchRequestDto movieSearchRequestDto = new MovieSearchRequestDto();
-        movieSearchRequestDto.setOriginalName("the green mile");
-        List<Movie> movies = search(movieSearchRequestDto);
-        log.info("Finish searching of movies. It took {} ms", System.currentTimeMillis() - startTime);
-        return movies;
-
-    }
 }

@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -26,12 +24,14 @@ public class GenreCacheImpl implements GenreCache {
     private GenreService genreService;
 
     @Override
-    public Map<Long, Genre> getGenres(){
-        return new HashMap<>(genreMap);
+    public List<Genre> getGenres(List<Long> genreIds){
+        return genreMap.values().stream()
+                .filter(p -> genreIds.stream().anyMatch(i -> i == p.getId()))
+                .collect(Collectors.toList());
     }
 
     @Scheduled(fixedDelay = FIXED_DELAY)
-    private void cacheUpdate(){
+    public void cacheUpdate(){
         log.info("Start refresh genre cache");
         long startTime = System.currentTimeMillis();
         List<Genre> genres = genreService.getGenres();
