@@ -8,4 +8,8 @@ public interface GenreDao {
     Genre getById(Long id);
 
     List<Genre> getByMovieId(Long id);
+
+    List<Long> getIdsByMovieId(Long id);
+
+    List<Genre> getGenres();
 }

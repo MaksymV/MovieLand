@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class ReviewDaoImpl implements ReviewDao {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final ReviewRowMapper reviewRowMapper = new ReviewRowMapper();
 
     @Autowired
     private String getReviewsByMovieIdSQL;
@@ -25,7 +26,7 @@ public class ReviewDaoImpl implements ReviewDao {
     public List<Review> getByMovieId(Long id) {
         log.info("Start query to get reviews with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Review> reviews = jdbcTemplate.query(getReviewsByMovieIdSQL, new Object[]{id}, new ReviewRowMapper());
+        List<Review> reviews = jdbcTemplate.query(getReviewsByMovieIdSQL, new Object[]{id}, reviewRowMapper);
         log.info("Finish query to get reviews with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return reviews;
     }

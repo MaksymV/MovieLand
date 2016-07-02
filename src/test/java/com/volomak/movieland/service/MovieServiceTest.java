@@ -5,7 +5,9 @@ import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
 import com.volomak.movieland.entity.Review;
-import com.volomak.movieland.service.dto.*;
+import com.volomak.movieland.service.cache.GenreCache;
+import com.volomak.movieland.service.dto.MovieDetailsDto;
+import com.volomak.movieland.service.dto.MovieListDto;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by grey4 on 14.06.2016.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/spring/root-context.xml")
 @WebAppConfiguration
@@ -42,6 +41,9 @@ public class MovieServiceTest {
 
     @Mock
     private ReviewService reviewService;
+
+    @Mock
+    private GenreCache genreCache;
 
     @Autowired
     @InjectMocks
@@ -60,7 +62,7 @@ public class MovieServiceTest {
 
     @Test
     public void getMoviesTest(){
-        List<MovieListDto> movieListDtoList = movieService.getMovies("asc", "asc", 1);
+        List<MovieListDto> movieListDtoList = movieService.getMovies("asc", "asc", 2);
         MovieListDto movies1 = movieListDtoList.get(0);
         Assert.assertEquals(movies1.getName(),"кино1");
         List<Genre> genres1 = movies1.getGenres();
@@ -92,15 +94,15 @@ public class MovieServiceTest {
         List<Country> countries1 = new ArrayList<>(Arrays.asList(country1, country2));
         List<Country> countries2 = new ArrayList<>(Arrays.asList(country2, country3));
 
-        Genre genre1 = new Genre();
-        genre1.setName("genre1");
-        Genre genre2 = new Genre();
-        genre2.setName("genre2");
-        Genre genre3 = new Genre();
-        genre3.setName("genre3");
+        Genre genre1 = new Genre(1L, "genre1");
+        Genre genre2 = new Genre(2L, "genre2");
+        Genre genre3 = new Genre(2L, "genre2");
 
         List<Genre> genres1 = new ArrayList<>(Arrays.asList(genre1, genre2));
         List<Genre> genres2 = new ArrayList<>(Arrays.asList(genre2, genre3));
+
+        List<Long> genresIds1 = new ArrayList<>(Arrays.asList(1L, 2L));
+        List<Long> genresIds2 = new ArrayList<>(Arrays.asList(2L, 3L));
 
         Review review1 = new Review();
         review1.setReview("review1");
@@ -138,10 +140,14 @@ public class MovieServiceTest {
 
         List<Movie> movies1 = new ArrayList<>(Arrays.asList(movie1, movie2));
 
-        Mockito.when(movieDao.getMovies("asc", "asc", 1, 5)).thenReturn(movies1);
+        Mockito.when(movieDao.getMovies("asc", "asc", 2)).thenReturn(movies1);
         Mockito.when(movieDao.getById(1L)).thenReturn(movie1);
+        Mockito.when(genreCache.getGenres(genresIds1)).thenReturn(genres1);
+        Mockito.when(genreCache.getGenres(genresIds2)).thenReturn(genres2);
         Mockito.when(genreService.getByMovieId(1L)).thenReturn(genres1);
         Mockito.when(genreService.getByMovieId(2L)).thenReturn(genres2);
+        Mockito.when(genreService.getIdsByMovieId(1L)).thenReturn(genresIds1);
+        Mockito.when(genreService.getIdsByMovieId(2L)).thenReturn(genresIds2);
         Mockito.when(countryService.getByMovieId(1L)).thenReturn(countries1);
         Mockito.when(countryService.getByMovieId(2L)).thenReturn(countries2);
         Mockito.when(reviewService.getByMovieId(1L)).thenReturn(reviews1);

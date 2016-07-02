@@ -1,5 +1,6 @@
 package com.volomak.movieland.dao;
 
+import com.volomak.movieland.dao.postgres.util.QueryBiulder;
 import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
@@ -12,9 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.sql.SQLException;
 
-/**
- * Created by grey4 on 17.06.2016.
- */
 public class QueryBuilderTest {
     @Mock
     public MovieSearchRequestDto movieSearchRequestDto;
@@ -53,6 +51,18 @@ public class QueryBuilderTest {
             "or country.name like '%country2%'\n"+
             "or genre.name_c like '%genre2%'\n";
         Assert.assertEquals(expectedResult, query);
+
+        expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
+        "order by rate_r asc, price_r asc\n"+
+        "offset 5 limit 5";
+        query = queryBiulder.getMovies("asc", "asc", 2);
+        Assert.assertEquals(expectedResult, query);
+
+        expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
+        "offset 5 limit 5";
+        query = queryBiulder.getMovies("", "", 2);
+        Assert.assertEquals(expectedResult, query);
+
     }
 
      private void initLocalMocks() {
@@ -66,12 +76,10 @@ public class QueryBuilderTest {
          country2.setId(2L);
          country2.setName("country2");
          Mockito.when(movieSearchRequestDto.getCountry()).thenReturn(country, country, null, country2, country2);
-         Genre genre = new Genre();
-         genre.setId(1L);
-         genre.setName("genre1");
-         Genre genre2 = new Genre();
-         genre2.setId(1L);
-         genre2.setName("genre2");
+
+         Genre genre = new Genre(1L, "genre1");
+         Genre genre2 = new Genre(2L, "genre2");
+
          Mockito.when(movieSearchRequestDto.getGenre()).thenReturn(genre, genre, null, genre2, genre2);
     }
 

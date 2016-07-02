@@ -12,6 +12,4 @@ public interface MovieService {
     List<MovieListDto> getMovies(String ratingOrder, String priceOrder, int page);
 
     List<MovieListDto> search(MovieSearchRequestDto movieSearchRequestDto);
-
-    List<MovieListDto> searchDefault();
 }

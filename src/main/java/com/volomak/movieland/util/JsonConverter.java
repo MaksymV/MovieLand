@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JsonConverter {
 
-    JsonConverter(){
+    public JsonConverter(){
         GsonBuilder builder = new GsonBuilder();
         builder.create();
         builder.setPrettyPrinting();

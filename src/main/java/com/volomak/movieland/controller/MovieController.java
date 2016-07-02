@@ -58,17 +58,4 @@ public class MovieController {
         log.info("Movies are found. It took {} ms", System.currentTimeMillis() - startTime);
         return movieJson;
     }
-
-    @RequestMapping(value="/search/default", method=RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String searchDefault(){
-        log.info("Sending request to find movies");
-        long startTime = System.currentTimeMillis();
-        List<MovieListDto> movies = movieService.searchDefault();
-        String movieJson = jsonConverter.toJson(movies);
-        log.info("Movies are found. It took {} ms", System.currentTimeMillis() - startTime);
-        return movieJson;
-    }
-
-
 }

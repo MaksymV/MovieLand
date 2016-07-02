@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class CoutryDaoImpl implements CountryDao {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private static final CountryRowMapper countryRowMapper = new CountryRowMapper();
 
     @Autowired
     private String getCountriesByMovieIdSQL;
@@ -25,7 +26,7 @@ public class CoutryDaoImpl implements CountryDao {
     public List<Country> getByMovieId(Long id) {
         log.info("Start query to get countris with movie id {} from DB", id);
         long startTime = System.currentTimeMillis();
-        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL, new Object[]{id}, new CountryRowMapper());
+        List<Country> countries =  jdbcTemplate.query(getCountriesByMovieIdSQL, new Object[]{id}, countryRowMapper);
         log.info("Finish query to get countries with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
         return countries;
     }

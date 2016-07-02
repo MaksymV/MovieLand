@@ -6,8 +6,8 @@ import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieDtoConverter {
@@ -31,12 +31,8 @@ public class MovieDtoConverter {
         movieListDto.setYear(movie.getYear());
         movieListDto.setRate(movie.getRate());
         List<Genre> genres = movie.getGenres();
-        List<Genre> genres2 = new ArrayList<>();
-        for(Genre genre : genres){
-            genre.setId(null);
-            genres2.add(genre);
-        }
-        movieListDto.setGenres(genres2);
+        List<Genre> genresDto = genres.stream().map(genre -> new Genre(null, genre.getName())).collect(Collectors.toList());
+        movieListDto.setGenres(genresDto);
         return movieListDto;
     }
 }
