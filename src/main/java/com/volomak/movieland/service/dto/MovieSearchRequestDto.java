@@ -3,16 +3,12 @@ package com.volomak.movieland.service.dto;
 import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 
-import java.util.List;
-
-/**
- * Created by grey4 on 17.06.2016.
- */
 public class MovieSearchRequestDto {
     private Genre genre;
     private String name;
     private String originalName;
     private int year;
+    private Country country;
 
     public Genre getGenre() {
         return genre;
@@ -53,7 +49,4 @@ public class MovieSearchRequestDto {
     public void setCountry(Country country) {
         this.country = country;
     }
-
-    private Country country;
-
 }

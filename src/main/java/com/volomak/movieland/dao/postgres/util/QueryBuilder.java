@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class QueryBiulder {
+public class QueryBuilder {
 
     public static final String SELECT_FROM_MOVIE = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n";
     public static final String WHERE_NAME = "movie.name like '%%%s%%'\n";

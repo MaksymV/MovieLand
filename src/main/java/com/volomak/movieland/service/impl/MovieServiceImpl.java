@@ -12,7 +12,7 @@ import com.volomak.movieland.service.cache.GenreCache;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
-import com.volomak.movieland.service.dto.util.MovieDtoConverter;
+import com.volomak.movieland.service.dto.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     private CountryService countryService;
 
     @Autowired
-    private MovieDtoConverter movieDtoConverter;
+    private DtoConverter dtoConverter;
 
     @Autowired
     private ReviewService reviewService;
@@ -51,7 +51,7 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieDao.getById(id);
         enrichMovie(movie);
         log.info("Finish query to get movie with movie id {} from DB. It took {} ms", id, System.currentTimeMillis() - startTime);
-        return movieDtoConverter.toDetails(movie);
+        return dtoConverter.toDetails(movie);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieDao.getMovies(ratingOrder, priceOrder, page);
         enrichMovie(movies);
         for (Movie movie : movies) {
-             movieListDtos.add(movieDtoConverter.toList(movie));
+             movieListDtos.add(dtoConverter.toList(movie));
         }
         log.info("Finish query to get all movies from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movieListDtos;
@@ -76,7 +76,7 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieDao.search(movieSearchRequestDto);
         enrichMovie(movies);
         for (Movie movie : movies) {
-            movieListDtos.add(movieDtoConverter.toList(movie));
+            movieListDtos.add(dtoConverter.toList(movie));
         }
         log.info("Finish query to find movies from DB. It took {} ms", System.currentTimeMillis() - startTime);
         return movieListDtos;

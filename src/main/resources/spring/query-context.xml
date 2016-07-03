@@ -36,4 +36,16 @@
         <constructor-arg value="SELECT review.id, review.movie_id, review.user_id, review.review_c FROM review where review.movie_id = ?;"/>
     </bean>
 
+    <bean id="getUserByName" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c from users where name_c = ?;"/>
+    </bean>
+
+    <bean id="getUserById" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c from users where id = ?;"/>
+    </bean>
+
+    <bean id="getUserByCredentials" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c from users where name_c = ? and password_c = ?;"/>
+    </bean>
+
 </beans>
