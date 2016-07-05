@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import com.volomak.movieland.util.PermittedRoles;
 
 @Controller
 @RequestMapping(value = "/v1")
@@ -21,6 +22,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    @PermittedRoles(roles = {"USER", "ADMIN"})
     @RequestMapping(value = "/review", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Review addReview(@RequestBody ReviewRequestDto reviewRequestDto){
@@ -31,6 +33,7 @@ public class ReviewController {
         return review;
     }
 
+    @PermittedRoles(roles = {"USER", "ADMIN"})
     @RequestMapping(value = "/review", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public int delReview(@PathVariable int reviewId){
