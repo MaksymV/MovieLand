@@ -25,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int delReview(int reviewId) {
-        return reviewDao.delReview(reviewId);
+    public int delReview(ReviewRequestDto reviewRequestDto) {
+        return reviewDao.delReview(reviewRequestDto);
     }
 }

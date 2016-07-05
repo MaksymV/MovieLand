@@ -5,12 +5,10 @@ import com.volomak.movieland.service.cache.UserTokenCache;
 import com.volomak.movieland.service.dto.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
@@ -41,6 +39,19 @@ public class UserTokenCacheImpl implements UserTokenCache {
     }
 
     @Override
+    public UserToken getByToken(UUID token) {
+        log.info("Start get UserToken");
+        long startTime = System.currentTimeMillis();
+        for (Map.Entry<String, UserToken> entry : userTokenMap.entrySet()) {
+            if (token.equals(entry.getValue().getToken())){
+                return entry.getValue();
+            }
+
+        }
+        return null;
+    }
+
+    @Override
     public boolean isExist(UserCredentials userCredentials) {
         if (userTokenMap.containsKey(userCredentials.getLogin())){
             if (isUserTokenExpired(userTokenMap.get(userCredentials.getLogin()).getExpirationDate())){
@@ -58,6 +69,15 @@ public class UserTokenCacheImpl implements UserTokenCache {
             return false;
         }
         return userToken.getToken().equals(token);
+    }
+
+    @Override
+    public boolean validateRole(UUID token, String[] roles) {
+        for (String role : roles) {
+            if (token != null && role.equals(getByToken(token).getRole()));
+            return true;
+        }
+        return false;
     }
 
 

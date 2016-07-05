@@ -1,6 +1,7 @@
 package com.volomak.movieland.service.dto;
 
 public class ReviewRequestDto {
+    private long Id;
     private long moviewId;
     private long userId;
     private String Review;
@@ -27,5 +28,13 @@ public class ReviewRequestDto {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getId() {
+        return Id;
+    }
+
+    public void setId(long id) {
+        Id = id;
     }
 }

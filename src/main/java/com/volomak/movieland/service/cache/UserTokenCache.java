@@ -13,4 +13,8 @@ public interface UserTokenCache {
     boolean isExist(UserCredentials userCredentials);
 
     boolean validate(UserCredentials userCredentials, UUID token);
+
+    boolean validateRole(UUID token, String[] roles);
+
+    UserToken getByToken(UUID token);
 }

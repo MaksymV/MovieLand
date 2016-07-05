@@ -69,11 +69,11 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public int delReview(int reviewId) {
-        log.info("Start delete reviews to movie with id {}", reviewId);
+    public int delReview(ReviewRequestDto reviewRequestDto) {
+        log.info("Start delete reviews of user {} from movie with id {}", reviewRequestDto.getUserId(), reviewRequestDto.getMoviewId());
         long startTime = System.currentTimeMillis();
-        int affectedRows = jdbcTemplate.update(delReviewToMovieSQL, new Object[] {reviewId});
-        log.info("Finish delete reviews to movie with id {}. It took {} ms", reviewId, System.currentTimeMillis() - startTime);
+        int affectedRows = jdbcTemplate.update(delReviewToMovieSQL, new Object[] {reviewRequestDto.getId(), reviewRequestDto.getUserId()});
+        log.info("Finish delete reviews of user {} from movie with id {}. It took {} ms", reviewRequestDto.getUserId(), reviewRequestDto.getMoviewId(), System.currentTimeMillis() - startTime);
         return affectedRows;
     }
 }

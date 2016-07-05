@@ -10,5 +10,5 @@ public interface ReviewService {
 
     Review addReview(ReviewRequestDto reviewRequestDto);
 
-    int delReview(int reviewId);
+    int delReview(ReviewRequestDto eviewRequestDto);
 }

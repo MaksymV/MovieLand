@@ -8,11 +8,13 @@ public final class UserToken {
 
     final private String login;
     final private UUID token;
+    final private String role;
     final private LocalDateTime expirationDate;
 
     public UserToken(User user) {
         this.login = user.getName();
         this.token = UUID.randomUUID();
+        this.role = user.getRole();
         this.expirationDate = LocalDateTime.now().plusHours(USER_TOKEN_EXPIRATION);
     }
 
@@ -26,5 +28,9 @@ public final class UserToken {
 
     public LocalDateTime getExpirationDate() {
         return expirationDate;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

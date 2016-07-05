@@ -1,6 +1,8 @@
 package com.volomak.movieland.controller;
 
+import com.volomak.movieland.controller.error.RestrictAccessException;
 import com.volomak.movieland.entity.Review;
+import com.volomak.movieland.entity.UserToken;
 import com.volomak.movieland.service.ReviewService;
 import com.volomak.movieland.service.dto.ReviewRequestDto;
 import com.volomak.movieland.util.JsonConverter;
@@ -34,12 +36,13 @@ public class ReviewController {
     }
 
     @PermittedRoles(roles = {"USER", "ADMIN"})
-    @RequestMapping(value = "/review", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/review/{reviewId}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int delReview(@PathVariable int reviewId){
+    public int delReview(@PathVariable ReviewRequestDto reviewRequestDto,
+                         @RequestHeader(value = "authToken") String token) throws RestrictAccessException {
         log.info("Start send request to add review");
         long startTime = System.currentTimeMillis();
-        int AffectedRows = reviewService.delReview(reviewId);
+        int AffectedRows = reviewService.delReview(reviewRequestDto);
         log.info("Finish request to add review. It took {} ms", System.currentTimeMillis() - startTime);
         return AffectedRows;
     }

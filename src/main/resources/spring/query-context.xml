@@ -53,7 +53,7 @@
     </bean>
 
     <bean id="delReviewToMovieSQL" class="java.lang.String">
-        <constructor-arg value="DELETE FROM review WHERE id = ?;"/>
+        <constructor-arg value="DELETE FROM review WHERE id = ? and user_id = ?;"/>
     </bean>
 
     <bean id="delReviewToMovieByUserMoviewIdsSQL" class="java.lang.String">
