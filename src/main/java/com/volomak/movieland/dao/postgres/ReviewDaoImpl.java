@@ -52,7 +52,7 @@ public class ReviewDaoImpl implements ReviewDao {
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement preparedStatement = connection.prepareStatement(addReviewToMovieSQL, new String[] {"1"});
+                PreparedStatement preparedStatement = connection.prepareStatement(addReviewToMovieSQL);
                 preparedStatement.setLong(1, reviewRequestDto.getUserId());
                 preparedStatement.setLong(2, reviewRequestDto.getMoviewId());
                 preparedStatement.setString(3, reviewRequestDto.getReview());
@@ -69,11 +69,11 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public int delReview(ReviewRequestDto reviewRequestDto) {
-        log.info("Start delete reviews of user {} from movie with id {}", reviewRequestDto.getUserId(), reviewRequestDto.getMoviewId());
+    public int delReview(Long reviewId, Long userId) {
+        log.info("Start delete reviews with id {}", reviewId);
         long startTime = System.currentTimeMillis();
-        int affectedRows = jdbcTemplate.update(delReviewToMovieSQL, new Object[] {reviewRequestDto.getId(), reviewRequestDto.getUserId()});
-        log.info("Finish delete reviews of user {} from movie with id {}. It took {} ms", reviewRequestDto.getUserId(), reviewRequestDto.getMoviewId(), System.currentTimeMillis() - startTime);
+        int affectedRows = jdbcTemplate.update(delReviewToMovieSQL, new Object[] {reviewId, userId});
+        log.info("Finish delete reviews with id {}. It took {} ms", reviewId, System.currentTimeMillis() - startTime);
         return affectedRows;
     }
 }

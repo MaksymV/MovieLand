@@ -2,7 +2,6 @@ package com.volomak.movieland.controller.interceptor;
 
 import com.volomak.movieland.controller.error.RestrictAccessException;
 import com.volomak.movieland.service.cache.UserTokenCache;
-import com.volomak.movieland.service.cache.impl.UserTokenCacheImpl;
 import com.volomak.movieland.util.PermittedRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +39,11 @@ public class MovielandInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
+        if (authToken == null || userTokenCache.getByToken(UUID.fromString(authToken)) == null) {
+            MDC.put("userLogin", "guest");
+        } else {
+            MDC.put("userLogin", userTokenCache.getByToken(UUID.fromString(authToken)).getLogin());
+        }
         return super.preHandle(request, response, handler);
     }
 }

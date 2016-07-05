@@ -6,6 +6,7 @@ import java.util.UUID;
 public final class UserToken {
     private static final Long USER_TOKEN_EXPIRATION = 2L;
 
+    final private long id;
     final private String login;
     final private UUID token;
     final private String role;
@@ -15,6 +16,7 @@ public final class UserToken {
         this.login = user.getName();
         this.token = UUID.randomUUID();
         this.role = user.getRole();
+        this.id = user.getId();
         this.expirationDate = LocalDateTime.now().plusHours(USER_TOKEN_EXPIRATION);
     }
 
@@ -32,5 +34,9 @@ public final class UserToken {
 
     public String getRole() {
         return role;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +47,10 @@ public class SecurityServiceImpl implements SecurityService {
         }
         log.info("Finish check credentials. It took {} ms", System.currentTimeMillis() - startTime);
         return userToken;
+    }
+
+    public UserToken getByToken(UUID token){
+        return userTokenCache.getByToken(token);
     }
 
 }

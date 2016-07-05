@@ -24,10 +24,12 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @PermittedRoles(roles = {"USER", "ADMIN"})
+    //@PermittedRoles(roles = {"USER", "ADMIN"})
     @RequestMapping(value = "/review", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Review addReview(@RequestBody ReviewRequestDto reviewRequestDto){
+    public Review addReview(@RequestBody ReviewRequestDto reviewRequestDto
+                           //,@RequestHeader(value = "authToken") String token
+    ){
         log.info("Start send request to add review");
         long startTime = System.currentTimeMillis();
         Review review = reviewService.addReview(reviewRequestDto);
@@ -38,11 +40,11 @@ public class ReviewController {
     @PermittedRoles(roles = {"USER", "ADMIN"})
     @RequestMapping(value = "/review/{reviewId}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int delReview(@PathVariable ReviewRequestDto reviewRequestDto,
+    public int delReview(@PathVariable Long reviewId,
                          @RequestHeader(value = "authToken") String token) throws RestrictAccessException {
         log.info("Start send request to add review");
         long startTime = System.currentTimeMillis();
-        int AffectedRows = reviewService.delReview(reviewRequestDto);
+        int AffectedRows = reviewService.delReview(reviewId, token);
         log.info("Finish request to add review. It took {} ms", System.currentTimeMillis() - startTime);
         return AffectedRows;
     }
