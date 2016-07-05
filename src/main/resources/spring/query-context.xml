@@ -49,6 +49,10 @@
     </bean>
 
     <bean id="addReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="INSERT INTO review(id, user_id, movie_id, review_c) VALUES (default, ?, ?, ?);"/>
+    </bean>
+
+    <bean id="addReviewToMovie2SQL" class="java.lang.String">
         <constructor-arg value="INSERT INTO review(id, user_id, movie_id, review_c) VALUES (default, ?, ?, ?) RETURNING id;"/>
     </bean>
 

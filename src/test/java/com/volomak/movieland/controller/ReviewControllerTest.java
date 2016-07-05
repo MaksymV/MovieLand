@@ -1,5 +1,6 @@
 package com.volomak.movieland.controller;
 
+import com.volomak.movieland.controller.interceptor.MovielandInterceptor;
 import com.volomak.movieland.service.dto.ReviewRequestDto;
 import com.volomak.movieland.util.JsonConverter;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class ReviewControllerTest {
         reviewRequestDto.setMoviewId(1L);
         reviewRequestDto.setReview("test1");
 
-        mockMvc.perform(post("/v1/review")//.header("authToken", "token111")
+        mockMvc.perform(post("/v1/review").header("authToken", "token111")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonConverter.toJson(reviewRequestDto)))
                 .andExpect(status().isOk())
@@ -66,6 +67,11 @@ public class ReviewControllerTest {
         @Bean
         public ReviewController reviewController(){
             return new ReviewController();
+        }
+
+        @Bean
+        public MovielandInterceptor movielandInterceptor(){
+            return new MovielandInterceptor();
         }
     }
 }

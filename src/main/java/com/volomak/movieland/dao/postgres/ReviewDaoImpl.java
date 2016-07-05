@@ -60,7 +60,7 @@ public class ReviewDaoImpl implements ReviewDao {
             }
         }, keyHolder);
         Review review = new Review();
-        review.setId(keyHolder.getKey().longValue());
+        //review.setId(keyHolder.getKey().longValue());
         review.setUserId(reviewRequestDto.getUserId());
         review.setMovieId(reviewRequestDto.getMoviewId());
         review.setReview(reviewRequestDto.getReview());

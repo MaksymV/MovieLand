@@ -24,11 +24,11 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    //@PermittedRoles(roles = {"USER", "ADMIN"})
+    @PermittedRoles(roles = {"USER", "ADMIN"})
     @RequestMapping(value = "/review", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Review addReview(@RequestBody ReviewRequestDto reviewRequestDto
-                           //,@RequestHeader(value = "authToken") String token
+                           ,@RequestHeader(value = "authToken") String token
     ){
         log.info("Start send request to add review");
         long startTime = System.currentTimeMillis();
