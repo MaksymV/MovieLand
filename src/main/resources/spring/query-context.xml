@@ -48,4 +48,16 @@
         <constructor-arg value="select id, name_c, email_c, password_c from users where name_c = ? and password_c = ?;"/>
     </bean>
 
+    <bean id="addReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="INSERT INTO review(id, user_id, movie_id, review_c) VALUES (default, ?, ?, ?);"/>
+    </bean>
+
+    <bean id="delReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE id = ?;"/>
+    </bean>
+
+    <bean id="delReviewToMovieByUserMoviewIdsSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE user_id = ? and  movie_id = ? and review_c = ?;"/>
+    </bean>
+
 </beans>

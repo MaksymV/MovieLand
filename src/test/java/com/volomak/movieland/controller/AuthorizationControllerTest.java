@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={AuthorizationControllerTest.TestConfiguration.class})
@@ -51,7 +52,26 @@ public class AuthorizationControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonConverter.toJson(userCredentials)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.login").value("дэрил брайант"));
+        .andExpect(jsonPath("$.login").value("дэрил брайант"))
+        .andDo(print());
+
+        mockMvc.perform(post("/v1/user/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonConverter.toJson(userCredentials)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.login").value("дэрил брайант"))
+                .andDo(print());
+
+        UserCredentials userCredentials2 = new UserCredentials();
+        userCredentials2.setLogin("айда дэвис");
+        userCredentials2.setPassword("pepsi1");
+
+        mockMvc.perform(post("/v1/user/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonConverter.toJson(userCredentials2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.login").value("айда дэвис"))
+                .andDo(print());
     }
 
     @Test
