@@ -37,15 +37,15 @@
     </bean>
 
     <bean id="getUserByName" class="java.lang.String">
-        <constructor-arg value="select id, name_c, email_c, password_c from users where name_c = ?;"/>
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where name_c = ?;"/>
     </bean>
 
     <bean id="getUserById" class="java.lang.String">
-        <constructor-arg value="select id, name_c, email_c, password_c from users where id = ?;"/>
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where id = ?;"/>
     </bean>
 
     <bean id="getUserByCredentials" class="java.lang.String">
-        <constructor-arg value="select id, name_c, email_c, password_c from users where name_c = ? and password_c = ?;"/>
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where email_c = ? and password_c = ?;"/>
     </bean>
 
     <bean id="addReviewToMovieSQL" class="java.lang.String">
@@ -58,6 +58,10 @@
 
     <bean id="delReviewToMovieSQL" class="java.lang.String">
         <constructor-arg value="DELETE FROM review WHERE id = ? and user_id = ?;"/>
+    </bean>
+
+    <bean id="delAnyReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE id = ?;"/>
     </bean>
 
     <bean id="delReviewToMovieByUserMoviewIdsSQL" class="java.lang.String">

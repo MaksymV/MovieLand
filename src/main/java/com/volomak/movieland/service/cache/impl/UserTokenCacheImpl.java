@@ -74,8 +74,9 @@ public class UserTokenCacheImpl implements UserTokenCache {
     @Override
     public boolean validateRole(UUID token, String[] roles) {
         for (String role : roles) {
-            if (token != null && role.equals(getByToken(token).getRole()));
-            return true;
+            if (token != null && role.equals(getByToken(token).getRole())) {
+                return true;
+            }
         }
         return false;
     }

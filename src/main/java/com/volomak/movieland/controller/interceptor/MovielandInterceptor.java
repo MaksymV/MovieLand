@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -16,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.UUID;
 
+@Component
 public class MovielandInterceptor extends HandlerInterceptorAdapter {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -28,6 +30,10 @@ public class MovielandInterceptor extends HandlerInterceptorAdapter {
 
         MDC.put("requestId", UUID.randomUUID().toString());
         String authToken = request.getHeader("authToken");
+        String userLogin = null;
+        if (request.getUserPrincipal() != null){
+            userLogin = request.getUserPrincipal().getName();
+        }
 
         final Method method = ((HandlerMethod) handler).getMethod();
 
@@ -39,10 +45,10 @@ public class MovielandInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        if (authToken == null || userTokenCache.getByToken(UUID.fromString(authToken)) == null) {
+        if (userLogin == null) {
             MDC.put("userLogin", "guest");
         } else {
-            MDC.put("userLogin", userTokenCache.getByToken(UUID.fromString(authToken)).getLogin());
+            MDC.put("userLogin", userLogin);
         }
         return super.preHandle(request, response, handler);
     }

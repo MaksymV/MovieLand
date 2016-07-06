@@ -6,6 +6,7 @@ import com.volomak.movieland.entity.UserToken;
 import com.volomak.movieland.service.ReviewService;
 import com.volomak.movieland.service.SecurityService;
 import com.volomak.movieland.service.dto.ReviewRequestDto;
+import com.volomak.movieland.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public int delReview(Long reviewId, String token){
         UserToken userToken = securityService.getByToken(UUID.fromString(token));
+        if (Constant.ADMIN_ROLE.equals(userToken.getRole())){
+            return reviewDao.delReview(reviewId);
+        }
         return reviewDao.delReview(reviewId, userToken.getId() );
     }
 }

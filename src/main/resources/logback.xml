@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property file="movieland.properties" />
+
+    <appender name="FILE-LOGGER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/Users/MVoloshchenko/IdeaProjects/movieland/logs/movieland.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <layout>
+                <Pattern>%d{HH:mm:ss.SSS} [%thread] %X{REQUESTID} %X{USEREMAIL} %-5level %logger{200} - %msg %n</Pattern>
+            </layout>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/Users/MVoloshchenko/IdeaProjects/movieland/logs/archived/movieland-%d{yyyy-MM-dd}.log.%i
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>smtp.gmail.com</smtpHost>
+        <smtpPort>587</smtpPort>
+        <STARTTLS>true</STARTTLS>
+        <username>username@gmail.com</username>
+        <password>password</password>
+
+        <to>username@gmail.com</to>
+        <from>username@gmail.com</from>
+        <subject>ERROR: %logger{20} - %m</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date %-5level %logger - %message%n</pattern>
+        </layout>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="FILE-LOGGER" />
+    </root>
+
+    <root level="ERROR">
+        <appender-ref ref="EMAIL"/>
+    </root>
+
+    <logger name="com.volomak.movieland" level="debug" additivity="false">
+        <appender-ref ref="FILE-LOGGER" />
+    </logger>
+
+</configuration>
