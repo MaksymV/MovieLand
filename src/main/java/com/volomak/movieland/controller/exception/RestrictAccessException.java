@@ -1,4 +1,4 @@
-package com.volomak.movieland.controller.error;
+package com.volomak.movieland.controller.exception;
 
 public class RestrictAccessException extends RuntimeException {
     public RestrictAccessException() {

@@ -1,4 +1,4 @@
-package com.volomak.movieland.controller.error;
+package com.volomak.movieland.controller.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

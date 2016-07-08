@@ -1,6 +1,6 @@
 package com.volomak.movieland.controller.interceptor;
 
-import com.volomak.movieland.controller.error.RestrictAccessException;
+import com.volomak.movieland.controller.exception.RestrictAccessException;
 import com.volomak.movieland.service.cache.UserTokenCache;
 import com.volomak.movieland.util.PermittedRoles;
 import org.slf4j.Logger;
