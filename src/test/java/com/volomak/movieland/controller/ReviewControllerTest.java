@@ -1,6 +1,7 @@
 package com.volomak.movieland.controller;
 
 import com.jayway.jsonpath.JsonPath;
+import com.volomak.movieland.controller.exception.GlobalControllerExceptionHandler;
 import com.volomak.movieland.controller.interceptor.MovielandInterceptor;
 import com.volomak.movieland.service.dto.ReviewRequestDto;
 import com.volomak.movieland.service.dto.UserCredentials;
@@ -113,7 +114,7 @@ public class ReviewControllerTest {
         mockMvc.perform(post("/v1/review").header("authToken", token1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonConverter.toJson(reviewRequestDto)))
-                .andExpect(status().isOk())
+                .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
 
     }
@@ -141,6 +142,11 @@ public class ReviewControllerTest {
         @Override
         public void addInterceptors(InterceptorRegistry registry){
             registry.addInterceptor(movielandInterceptor()).addPathPatterns("/v1/**");
+        }
+
+        @Bean
+        public GlobalControllerExceptionHandler globalControllerExceptionHandler(){
+            return new GlobalControllerExceptionHandler();
         }
 
     }

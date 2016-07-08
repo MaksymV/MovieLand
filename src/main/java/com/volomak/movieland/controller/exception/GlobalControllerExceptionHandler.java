@@ -19,6 +19,12 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(jsonConverter.toException(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(RestrictAccessException.class)
+    public ResponseEntity<String> restrictAccessExceptionHandler(Exception e) {
+        return new ResponseEntity<>(jsonConverter.toException(e.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+
     @ExceptionHandler(IncorrectCredentials.class)
     public ResponseEntity<String> incorrectCredentialsHandler(Exception e) {
         return new ResponseEntity<>(jsonConverter.toException(e.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
