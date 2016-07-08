@@ -11,4 +11,6 @@ public interface ReviewDao {
     Review addReview(ReviewRequestDto reviewRequestDto);
 
     int delReview(Long reviewId, Long userId);
+
+    int delReview(Long reviewId);
 }

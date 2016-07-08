@@ -13,7 +13,7 @@ public final class UserToken {
     final private LocalDateTime expirationDate;
 
     public UserToken(User user) {
-        this.login = user.getName();
+        this.login = user.getEmail();
         this.token = UUID.randomUUID();
         this.role = user.getRole();
         this.id = user.getId();

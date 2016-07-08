@@ -30,6 +30,10 @@ public class MovielandInterceptor extends HandlerInterceptorAdapter {
 
         MDC.put("requestId", UUID.randomUUID().toString());
         String authToken = request.getHeader("authToken");
+        String userLogin = null;
+        if (request.getUserPrincipal() != null){
+            userLogin = request.getUserPrincipal().getName();
+        }
 
         final Method method = ((HandlerMethod) handler).getMethod();
 
@@ -41,10 +45,10 @@ public class MovielandInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        if (authToken == null || userTokenCache.getByToken(UUID.fromString(authToken)) == null) {
+        if (userLogin == null) {
             MDC.put("userLogin", "guest");
         } else {
-            MDC.put("userLogin", userTokenCache.getByToken(UUID.fromString(authToken)).getLogin());
+            MDC.put("userLogin", userLogin);
         }
         return super.preHandle(request, response, handler);
     }

@@ -46,31 +46,32 @@ public class AuthorizationControllerTest {
     @Test
     public void authorizeTest() throws Exception {
         UserCredentials userCredentials = new UserCredentials();
-        userCredentials.setLogin("дэрил брайант");
+        userCredentials.setLogin("daryl.bryant94@example.com");
         userCredentials.setPassword("exodus");
+
         mockMvc.perform(post("/v1/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonConverter.toJson(userCredentials)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.login").value("дэрил брайант"))
+        .andExpect(jsonPath("$.login").value("daryl.bryant94@example.com"))
         .andDo(print());
 
         mockMvc.perform(post("/v1/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonConverter.toJson(userCredentials)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.login").value("дэрил брайант"))
+                .andExpect(jsonPath("$.login").value("daryl.bryant94@example.com"))
                 .andDo(print());
 
         UserCredentials userCredentials2 = new UserCredentials();
-        userCredentials2.setLogin("айда дэвис");
+        userCredentials2.setLogin("ida.davis80@example.com");
         userCredentials2.setPassword("pepsi1");
 
         mockMvc.perform(post("/v1/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonConverter.toJson(userCredentials2)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.login").value("айда дэвис"))
+                .andExpect(jsonPath("$.login").value("ida.davis80@example.com"))
                 .andDo(print());
     }
 

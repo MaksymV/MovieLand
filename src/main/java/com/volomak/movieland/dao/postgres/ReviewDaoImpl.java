@@ -76,4 +76,13 @@ public class ReviewDaoImpl implements ReviewDao {
         log.info("Finish delete reviews with id {}. It took {} ms", reviewId, System.currentTimeMillis() - startTime);
         return affectedRows;
     }
+
+    @Override
+    public int delReview(Long reviewId) {
+        log.info("Start delete reviews with id {}", reviewId);
+        long startTime = System.currentTimeMillis();
+        int affectedRows = jdbcTemplate.update(delReviewToMovieSQL, new Object[] {reviewId});
+        log.info("Finish delete reviews with id {}. It took {} ms", reviewId, System.currentTimeMillis() - startTime);
+        return affectedRows;
+    }
 }

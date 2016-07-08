@@ -44,6 +44,7 @@ public class DtoConverter {
         userRequestDto.setName(user.getName());
         userRequestDto.setEmail(user.getEmail());
         userRequestDto.setPassword(user.getPassword());
+        userRequestDto.setRole(user.getRole());
         return userRequestDto;
     }
 

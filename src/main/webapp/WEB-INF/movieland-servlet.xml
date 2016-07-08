@@ -17,10 +17,6 @@
 
     <mvc:interceptors>
         <bean class="com.volomak.movieland.controller.interceptor.MovielandInterceptor"/>
-        <!--mvc:interceptor>
-            <mvc:mapping path="/v1/**"/>
-            <bean class="com.volomak.movieland.controller.interceptor.MovielandInterceptor"/>
-        </mvc:interceptor-->
     </mvc:interceptors>
 
 </beans>
