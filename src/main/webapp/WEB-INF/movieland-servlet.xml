@@ -15,4 +15,8 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <bean class="com.volomak.movieland.controller.interceptor.MovielandInterceptor"/>
+    </mvc:interceptors>
+
 </beans>

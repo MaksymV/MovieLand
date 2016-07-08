@@ -2,15 +2,17 @@ package com.volomak.movieland.service.dto.util;
 
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.entity.Movie;
+import com.volomak.movieland.entity.User;
 import com.volomak.movieland.service.dto.MovieDetailsDto;
 import com.volomak.movieland.service.dto.MovieListDto;
+import com.volomak.movieland.service.dto.UserRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MovieDtoConverter {
+public class DtoConverter {
     public MovieDetailsDto toDetails(Movie movie){
         MovieDetailsDto movieDetailsDto = new MovieDetailsDto();
         movieDetailsDto.setName(movie.getName());
@@ -35,4 +37,15 @@ public class MovieDtoConverter {
         movieListDto.setGenres(genresDto);
         return movieListDto;
     }
+
+    public UserRequestDto toRequest(User user){
+        UserRequestDto userRequestDto = new UserRequestDto();
+        userRequestDto.setId(user.getId());
+        userRequestDto.setName(user.getName());
+        userRequestDto.setEmail(user.getEmail());
+        userRequestDto.setPassword(user.getPassword());
+        userRequestDto.setRole(user.getRole());
+        return userRequestDto;
+    }
+
 }

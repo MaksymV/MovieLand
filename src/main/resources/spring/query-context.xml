@@ -36,4 +36,36 @@
         <constructor-arg value="SELECT review.id, review.movie_id, review.user_id, review.review_c FROM review where review.movie_id = ?;"/>
     </bean>
 
+    <bean id="getUserByName" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where name_c = ?;"/>
+    </bean>
+
+    <bean id="getUserById" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where id = ?;"/>
+    </bean>
+
+    <bean id="getUserByCredentials" class="java.lang.String">
+        <constructor-arg value="select id, name_c, email_c, password_c, role_c from users where email_c = ? and password_c = ?;"/>
+    </bean>
+
+    <bean id="addReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="INSERT INTO review(id, user_id, movie_id, review_c) VALUES (default, ?, ?, ?);"/>
+    </bean>
+
+    <bean id="addReviewToMovie2SQL" class="java.lang.String">
+        <constructor-arg value="INSERT INTO review(id, user_id, movie_id, review_c) VALUES (default, ?, ?, ?) RETURNING id;"/>
+    </bean>
+
+    <bean id="delReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE id = ? and user_id = ?;"/>
+    </bean>
+
+    <bean id="delAnyReviewToMovieSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE id = ?;"/>
+    </bean>
+
+    <bean id="delReviewToMovieByUserMoviewIdsSQL" class="java.lang.String">
+        <constructor-arg value="DELETE FROM review WHERE user_id = ? and  movie_id = ? and review_c = ?;"/>
+    </bean>
+
 </beans>

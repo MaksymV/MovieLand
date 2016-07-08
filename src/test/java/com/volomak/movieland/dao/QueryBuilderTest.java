@@ -1,6 +1,6 @@
 package com.volomak.movieland.dao;
 
-import com.volomak.movieland.dao.postgres.util.QueryBiulder;
+import com.volomak.movieland.dao.postgres.util.QueryBuilder;
 import com.volomak.movieland.entity.Country;
 import com.volomak.movieland.entity.Genre;
 import com.volomak.movieland.service.dto.MovieSearchRequestDto;
@@ -25,9 +25,9 @@ public class QueryBuilderTest {
 
     @Test
     public void movieSearch(){
-        QueryBiulder queryBiulder = new QueryBiulder();
+        QueryBuilder queryBuilder = new QueryBuilder();
         String expectedResult;
-        String query = queryBiulder.movieSearch(movieSearchRequestDto);
+        String query = queryBuilder.movieSearch(movieSearchRequestDto);
         expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
             "inner join movie_country on (movie_country.movie_id = movie.id) inner join country on (country.id = movie_country.country_id)\n"+
             "inner join movie_genre on (movie_genre.movie_id  = movie.id) inner join genre on (genre.id = movie_genre.genre_id)\n"+
@@ -38,12 +38,12 @@ public class QueryBuilderTest {
             "or genre.name_c like '%genre1%'\n";
         Assert.assertEquals(expectedResult, query);
 
-        query = queryBiulder.movieSearch(movieSearchRequestDto);
+        query = queryBuilder.movieSearch(movieSearchRequestDto);
         expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
             "where movie.name like '%name2%'\n";
         Assert.assertEquals(expectedResult, query);
 
-        query = queryBiulder.movieSearch(movieSearchRequestDto);
+        query = queryBuilder.movieSearch(movieSearchRequestDto);
         expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
             "inner join movie_country on (movie_country.movie_id = movie.id) inner join country on (country.id = movie_country.country_id)\n"+
             "inner join movie_genre on (movie_genre.movie_id  = movie.id) inner join genre on (genre.id = movie_genre.genre_id)\n"+
@@ -55,12 +55,12 @@ public class QueryBuilderTest {
         expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
         "order by rate_r asc, price_r asc\n"+
         "offset 5 limit 5";
-        query = queryBiulder.getMovies("asc", "asc", 2);
+        query = queryBuilder.getMovies("asc", "asc", 2);
         Assert.assertEquals(expectedResult, query);
 
         expectedResult = "SELECT id, name, original_name, year_i, description_c, rate_r, price_r FROM movie\n"+
         "offset 5 limit 5";
-        query = queryBiulder.getMovies("", "", 2);
+        query = queryBuilder.getMovies("", "", 2);
         Assert.assertEquals(expectedResult, query);
 
     }
